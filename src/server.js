@@ -17,10 +17,19 @@ const port = process.env.PORT || 8080;
 
 const router = express.Router();
 
-router.use((req, res, next) => {
-    console.log("Got a request!");
-    next();
-});
+router.route('/submissions')
+    .post((req, res) => {
+        const sub = new Submission();
+        sub.category = req.body.category;
+
+        sub.save((err) => {
+            if (err) {
+                res.send(err);
+            }
+
+            res.json({ message: 'Submission created!' });
+        })
+    });
 
 router.get('/', (req, res) => {
     res.json({message: 'what up!'})
