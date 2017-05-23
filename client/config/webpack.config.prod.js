@@ -9,8 +9,6 @@ var InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 var paths = require('./paths');
 var getClientEnvironment = require('./env');
 
-
-
 // Webpack uses `publicPath` to determine where the app is being served from.
 // It requires a trailing slash, or the file assets will get an incorrect path.
 var publicPath = paths.servedPath;
@@ -38,7 +36,7 @@ const cssFilename = 'static/css/[name].[contenthash:8].css';
 // However, our output is structured with css, js and media folders.
 // To have this structure working with relative paths, we have to use custom options.
 const extractTextPluginOptions = shouldUseRelativeAssetPaths
-  // Making sure that the publicPath goes back to to build folder.
+// Making sure that the publicPath goes back to to build folder.
   ? { publicPath: Array(cssFilename.split('/').length).join('../') }
   : undefined;
 
@@ -85,7 +83,7 @@ module.exports = {
       'react-native': 'react-native-web'
     }
   },
-  
+
   module: {
     // First, run the linter.
     // It's important to do this before Babel processes the JS.
@@ -113,18 +111,20 @@ module.exports = {
           /\.json$/,
           /\.svg$/
         ],
-        loader: 'url',
-        query: {
-          limit: 10000,
-          name: 'static/media/[name].[hash:8].[ext]'
-        }
+          loader: 'url',
+          query: {
+            limit: 10000,
+            name: 'static/media/[name].[hash:8].[ext]'
+          }
       },
       // Process JS with Babel.
       {
         test: /\.(js|jsx)$/,
-        include: paths.appSrc,
-        loader: 'babel',
-        
+          include: paths.appSrc,
+          loader: 'babel',
+          query: {
+            presets: ['es2015','react']
+          }
       },
       // The notation here is somewhat confusing.
       // "postcss" loader applies autoprefixer to our CSS.
@@ -140,18 +140,18 @@ module.exports = {
       // in the main CSS file.
       {
         test: /\.css$/,
-        loader: ExtractTextPlugin.extract(
-          'style',
-          'css?importLoaders=1!postcss',
-          extractTextPluginOptions
-        )
+          loader: ExtractTextPlugin.extract(
+            'style',
+            'css?importLoaders=1!postcss',
+            extractTextPluginOptions
+          )
         // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
       },
       // JSON is not enabled by default in Webpack but both Node and Browserify
       // allow it implicitly so we also enable it.
       {
         test: /\.json$/,
-        loader: 'json'
+          loader: 'json'
       },
       // "file" loader for svg
       {
@@ -165,7 +165,7 @@ module.exports = {
       // Remember to add the new extension(s) to the "url" loader exclusion list.
     ]
   },
-  
+
   // We use PostCSS for autoprefixing only.
   postcss: function() {
     return [
@@ -216,7 +216,7 @@ module.exports = {
     new webpack.optimize.UglifyJsPlugin({
       compress: {
         screw_ie8: true, // React doesn't support IE8
-        warnings: false
+          warnings: false
       },
       mangle: {
         screw_ie8: true
@@ -239,7 +239,7 @@ module.exports = {
   // Tell Webpack to provide empty mocks for them so importing them works.
   node: {
     fs: 'empty',
-    net: 'empty',
-    tls: 'empty'
+      net: 'empty',
+      tls: 'empty'
   }
 };
