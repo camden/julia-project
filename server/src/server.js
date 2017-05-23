@@ -37,6 +37,11 @@ function main() {
 
       sub.save((err, submission) => {
         if (err) {
+          if (err.name === "ValidationError") {
+            res.status(500)
+          } else {
+            res.status(400);
+          }
           res.send(err);
         } else {
           res.json(submission);
