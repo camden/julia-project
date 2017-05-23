@@ -5,11 +5,11 @@ const SubmissionSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    body: {
+    content: {
         type: String,
         required: true
     },
-    submitterName: {
+    authorName: {
         type: String,
         required: true
     },
