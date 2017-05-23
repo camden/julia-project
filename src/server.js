@@ -30,12 +30,23 @@ function main() {
         .post((req, res) => {
             const sub = new Submission();
             sub.category = req.body.category;
+            sub.content = req.body.content;
+            sub.authorName = req.body.authorName;
 
-            sub.save((err) => {
+            sub.save((err, submission) => {
                 if (err) {
                     res.send(err);
                 } else {
-                    res.json({ message: 'Submission created! with category: ' + req.body.category });
+                    res.json(submission);
+                }
+            })
+        })
+        .get((req, res) => {
+            Submission.find((err, submissions) => {
+                if (err) {
+                    res.send(err);
+                } else {
+                    res.json(submissions);
                 }
             })
         });
