@@ -34,9 +34,9 @@ function main() {
             sub.save((err) => {
                 if (err) {
                     res.send(err);
+                } else {
+                    res.json({ message: 'Submission created! with category: ' + req.body.category });
                 }
-
-                res.json({ message: 'Submission created!' });
             })
         });
 
