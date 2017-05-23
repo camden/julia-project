@@ -56,8 +56,8 @@
     "whatwg-fetch": "2.0.2"
   },
   "scripts": {
-    "start-client": "node scripts/start.js",
-    "build-client": "node scripts/build.js",
+    "start-client": "node client/scripts/start.js",
+    "build-client": "node client/scripts/build.js",
     "test": "node scripts/test.js --env=jsdom",
     "start-server": "node server/dist/server.js",
     "build-server": "babel server/src -d server/dist"
