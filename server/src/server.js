@@ -38,9 +38,9 @@ function main() {
       sub.save((err, submission) => {
         if (err) {
           if (err.name === "ValidationError") {
-            res.status(500)
+            res.status(400)
           } else {
-            res.status(400);
+            res.status(500);
           }
           res.send(err);
         } else {

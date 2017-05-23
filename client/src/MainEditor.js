@@ -111,6 +111,13 @@ export default class MainEditor extends React.Component {
                 content: this.state.output,
                 authorName: this.state.authorName
             })
+        }).then((res) => {
+          if (!res.ok) {
+            return res.json().then((err) => {
+              throw err;
+            });
+          }
+          return res.json();
         }).then((submission) => {
             console.log("New submission: ", submission);
         }).catch((err) => {
