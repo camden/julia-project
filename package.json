@@ -1,21 +1,29 @@
 {
-  "name": "julia-server",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "julia-script",
+  "version": "0.1.0",
+  "private": true,
   "dependencies": {
+    "dedent-js": "^1.0.1",
+    "draft-js": "^0.10.0",
+    "draftjs-to-html": "^0.7.2",
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4",
+    "react-draft-wysiwyg": "^1.9.8",
     "body-parser": "^1.17.1",
     "express": "^4.15.2",
     "mongoose": "^4.9.9"
   },
   "devDependencies": {
+    "react-scripts": "0.9.5",
     "babel-cli": "^6.24.1",
     "babel-preset-env": "^1.4.0"
   },
   "scripts": {
-    "start": "node dist/server.js",
-    "build": "babel src -d dist"
-  },
-  "author": "",
-  "license": "ISC"
+    "start-client": "react-scripts start",
+    "build-client": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "start-server": "node dist/server.js",
+    "build-server": "babel src -d dist"
+  }
 }
