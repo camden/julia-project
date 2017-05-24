@@ -1,3 +1,4 @@
+import path from 'path';
 import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
@@ -58,9 +59,12 @@ function main() {
       })
     });
 
-  router.get('/', (req, res) => {
-    res.json({message: 'what up!'})
+
+  app.get('/editor', (req, res) => {
+    res.sendFile(path.resolve(__dirname, '../../client/build/index.html'));
   });
+
+  app.use('/static', express.static(path.resolve(__dirname, '../../client/build/static')));
 
   app.use('/api', router);
 
