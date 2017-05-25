@@ -1,10 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import MainEditor from './MainEditor';
-import Viewer from './Viewer';
+import App from './App';
 import './index.css';
 
 ReactDOM.render(
-  <Viewer />,
+  <App />,
   document.getElementById('root')
 );
