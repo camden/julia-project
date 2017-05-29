@@ -14,7 +14,7 @@ export default class App extends React.Component {
         <div>
           <Route exact path="/" component={Homepage}/>
           <Route path="/viewer" component={Viewer}/>
-          <Route path="/editor" component={MainEditor}/>
+          <Route path="/editor/:subId?" component={MainEditor}/>
         </div>
       </Router>
     );

@@ -46,6 +46,14 @@ export default class MainEditor extends React.Component {
     this.onAuthorNameChange = this.onAuthorNameChange.bind(this);
     this.onProcessButtonClick = this.onProcessButtonClick.bind(this);
     this.onSubmitButtonClick = this.onSubmitButtonClick.bind(this);
+
+    this.loadDataIfURLParam();
+  }
+
+  loadDataIfURLParam() {
+    if (this.props.match.params.subId) {
+      const subId = this.props.match.params.subId;
+    }
   }
 
   onContentStateChange(contentState) {
