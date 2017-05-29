@@ -27,20 +27,6 @@ function main() {
 
   const router = express.Router();
 
-  router.route('/utils/getAllContent')
-    .get((req, res) => {
-      Submission.find((err, submissions) => {
-        if (err) {
-          res.send(err);
-        } else {
-          const allContent = submissions.reduce((prev, cur) => {
-            return prev + JSON.stringify(cur.content);
-          }, "");
-          res.json(allContent);
-        }
-      });
-    });
-
   router.route('/submissions')
     .post((req, res) => {
       const sub = new Submission();
