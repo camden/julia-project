@@ -33,6 +33,7 @@ function main() {
       sub.category = req.body.category;
       sub.content = req.body.content;
       sub.authorName = req.body.authorName;
+      sub.contentTitle = req.body.contentTitle;
 
       sub.save((err, submission) => {
         if (err) {

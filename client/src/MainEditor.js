@@ -102,6 +102,8 @@ export default class MainEditor extends React.Component {
       submitted: false
     });
 
+    this.makeOutput();
+
     fetch(config.baseUrl + '/submissions', {
       method: 'POST',
       headers: {

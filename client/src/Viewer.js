@@ -41,6 +41,7 @@ export default class Viewer extends React.Component {
         <li key={sub.id}>
           <div>Author: {sub.authorName}</div>
           <div>Category: {sub.category}</div>
+          <div>Title: {sub.contentTitle}</div>
           <pre>{sub.content}</pre>
         </li>
       );
