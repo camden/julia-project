@@ -98,7 +98,8 @@ export default class MainEditor extends React.Component {
 
     onSubmitButtonClick() {
         this.setState({
-            submitting: true
+          submitting: true,
+          submitted: false
         });
 
         fetch(config.baseUrl + '/submissions', {
@@ -119,7 +120,11 @@ export default class MainEditor extends React.Component {
           }
           return res.json();
         }).then((submission) => {
-            console.log("New submission: ", submission);
+          console.log("New submission: ", submission);
+          this.setState({
+            submitting: false,
+            submitted: true
+          });
         }).catch((err) => {
             throw err;
         });
