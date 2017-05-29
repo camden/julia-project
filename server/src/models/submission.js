@@ -7,7 +7,7 @@ const SubmissionSchema = new mongoose.Schema({
     },
     contentTitle: {
         type: String,
-        required: false
+        required: true
     },
     content: {
         type: String,
