@@ -5,6 +5,10 @@ const SubmissionSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    titleText: {
+        type: String,
+        required: false
+    },
     content: {
         type: String,
         required: true

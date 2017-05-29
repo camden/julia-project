@@ -110,6 +110,7 @@ export default class MainEditor extends React.Component {
       body: JSON.stringify({
         category: this.state.selectValue,
         content: this.state.output,
+        contentTitle: this.state.titleText,
         authorName: this.state.authorName
       })
     }).then((res) => {
