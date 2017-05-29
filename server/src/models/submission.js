@@ -5,12 +5,16 @@ const SubmissionSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    content: {
+        type: String,
+        required: true
+    },
     contentTitle: {
         type: String,
         required: true
     },
-    content: {
-        type: String,
+    rawContentWithoutTitle: {
+        type: mongoose.Schema.Types.Mixed,
         required: true
     },
     authorName: {

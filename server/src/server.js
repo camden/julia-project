@@ -31,8 +31,9 @@ function main() {
     .post((req, res) => {
       const sub = new Submission();
       sub.category = req.body.category;
-      sub.content = req.body.content;
       sub.authorName = req.body.authorName;
+      sub.content = req.body.content;
+      sub.rawContentWithoutTitle = req.body.rawContentWithoutTitle;
       sub.contentTitle = req.body.contentTitle;
 
       sub.save((err, submission) => {

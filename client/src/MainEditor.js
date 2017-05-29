@@ -113,6 +113,7 @@ export default class MainEditor extends React.Component {
         category: this.state.selectValue,
         content: this.state.output,
         contentTitle: this.state.titleText,
+        rawContentWithoutTitle: this.state.contentState,
         authorName: this.state.authorName
       })
     }).then((res) => {
