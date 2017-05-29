@@ -54,17 +54,35 @@ export default class Viewer extends React.Component {
   }
 
   getAllContent() {
-    const subs = this.state.submissions.map((sub) => {
-      return (
-        <div>
-          {sub.content}
-        </div>
+    const categories = Array.from(
+      new Set(
+        this.state.submissions.map((sub) => {
+          return sub.category;
+        })
       )
-    });
+    );
+
+    const subsByCategory = categories.sort((a, b) => {
+      return a.localeCompare(b);
+    })
+      .map((category) => {
+        return (
+          <div>
+            <h3>{category}</h3>
+            <pre className="output">
+              {this.state.submissions.filter((sub) => {
+                return sub.category === category;
+              }).map((sub) => {
+                return sub.content;
+              })}
+            </pre>
+          </div>
+        )
+      });
     return (
-      <pre className="output">
-        {subs}
-      </pre>
+      <div>
+        {subsByCategory}
+      </div>
     );
   }
 
