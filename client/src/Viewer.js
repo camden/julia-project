@@ -8,13 +8,15 @@ export default class Viewer extends React.Component {
     super(props);
 
     this.state = {
-      submissions: []
+      submissions: [],
+      allContentString: ""
     }
 
-    this.fetchData();
+    this.fetchSubmissions();
+    this.fetchAllContent();
   }
 
-  fetchData() {
+  fetchSubmissions() {
     const url = config.baseUrl + '/submissions';
     // const url = 'https://jsonplaceholder.typicode.com/posts';
     fetch(url, {
@@ -29,6 +31,27 @@ export default class Viewer extends React.Component {
     }).then((submissions) => {
       this.setState({
         submissions: submissions
+      });
+    }).catch((err) => {
+      throw err;
+    });
+  }
+
+  fetchAllContent() {
+    const url = config.baseUrl + '/utils/getAllContent';
+    // const url = 'https://jsonplaceholder.typicode.com/posts';
+    fetch(url, {
+      method: 'GET'
+    }).then((res) => {
+      if (!res.ok) {
+        return res.json().then((err) => {
+          throw err;
+        });
+      }
+      return res.json();
+    }).then((allContentString) => {
+      this.setState({
+        allContentString: allContentString
       });
     }).catch((err) => {
       throw err;
@@ -53,9 +76,21 @@ export default class Viewer extends React.Component {
     )
   }
 
+  getAllContent() {
+    return (
+      <div>
+        <pre className="output">
+          {this.state.allContentString}
+        </pre>
+      </div>
+    )
+  }
+
   render() {
     return (
       <div>
+        {this.getAllContent()}
+        <hr />
         {this.getSubmissions()}
       </div>
     );
