@@ -73,7 +73,11 @@ export default class Viewer extends React.Component {
               {this.state.submissions.filter((sub) => {
                 return sub.category === category;
               }).map((sub) => {
-                return sub.content;
+                return (
+                  <div>
+                    {sub.content}
+                  </div>
+                )
               })}
             </pre>
           </div>
