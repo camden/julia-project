@@ -3,6 +3,7 @@ import { Editor } from 'react-draft-wysiwyg';
 import { EditorState } from 'draft-js';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import draftToHtml from 'draftjs-to-html';
+import { Link } from 'react-router-dom';
 
 import config from './config.json';
 import './main.css';
@@ -156,7 +157,13 @@ export default class MainEditor extends React.Component {
     )
   }
 
-  render() {
+  submittedView() {
+    return (
+      <Link to="/">Return to Homepage</Link>
+    );
+  }
+
+  editorView() {
     const editorState = this.state.editorState;
     return (
       <div className="editor-container">
@@ -176,5 +183,14 @@ export default class MainEditor extends React.Component {
         <button onClick={this.onSubmitButtonClick}>Submit!</button>
       </div>
     );
+  }
+
+  render() {
+    // TODO: route to "/submitted" route
+    if (this.state.submitted) {
+      return this.submittedView();
+    } else {
+      return this.editorView();
+    }
   }
 }
