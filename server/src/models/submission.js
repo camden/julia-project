@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import autoIncrement from 'mongoose-sequence';
 
 const SubmissionSchema = new mongoose.Schema({
     category: {
@@ -28,4 +29,5 @@ const SubmissionSchema = new mongoose.Schema({
     }
 });
 
+SubmissionSchema.plugin(autoIncrement, {inc_field: 'id'});
 export default mongoose.model('Submission', SubmissionSchema);

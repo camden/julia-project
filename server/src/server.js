@@ -9,7 +9,6 @@ import Submission from './models/submission';
 // Database
 console.log("Connecting to MongoDB...")
 mongoose.connect('mongodb://localhost:27017/julia-server').then(() => {
-  console.log("Connected to MongoDB.")
   main();
 }).catch((err) => {
   console.error("Could not connect to MongoDB. Is it running on port 27017?");
@@ -57,6 +56,17 @@ function main() {
           res.json(submissions);
         }
       })
+    });
+
+  router.route('/submissions/:subId')
+    .get((req, res) => {
+      Submission.where({ id: req.params.subId }).findOne((err, sub) => {
+        if (err) {
+          res.send(err);
+        } else {
+          res.json(sub);
+        }
+      });
     });
 
 
