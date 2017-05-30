@@ -37,7 +37,8 @@ export default class MainEditor extends React.Component {
       titleText: "",
       output: "",
       submitting: false,
-      submitted: false
+      submitted: false,
+      newPost: true
     };
 
     this.onContentStateChange = this.onContentStateChange.bind(this);
@@ -54,7 +55,31 @@ export default class MainEditor extends React.Component {
   loadDataIfURLParam() {
     if (this.props.match.params.subId) {
       const subId = this.props.match.params.subId;
+      this.setState({
+        newPost: false
+      });
+      this.loadDataByPostId(subId);
     }
+  }
+
+  loadDataByPostId(subId) {
+    fetch(`${config.baseUrl}/submissions/${subId}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then((res) => {
+      if (!res.ok) {
+        return res.json().then((err) => {
+          throw err;
+        });
+      }
+      return res.json();
+    }).then((submission) => {
+      console.log("Got sub", submission);
+    }).catch((err) => {
+      throw err;
+    });
   }
 
   onContentStateChange(contentState) {
@@ -105,7 +130,7 @@ export default class MainEditor extends React.Component {
     this.makeOutput();
   }
 
-  onSubmitButtonClick() {
+  submitNewPost() {
     this.setState({
       submitting: true,
       submitted: false
@@ -143,6 +168,18 @@ export default class MainEditor extends React.Component {
     });
   }
 
+  updatePost() {
+    console.log("Updated " + this.props.match.params.subId);
+  }
+
+  onSubmitButtonClick() {
+    if (this.state.newPost) {
+      this.submitNewPost();
+    } else {
+      this.updatePost();
+    }
+  }
+
   getSelect() {
     const selectOptions = this.state.titleOptions.map((title) => {
       return (
@@ -163,6 +200,14 @@ export default class MainEditor extends React.Component {
     );
   }
 
+  getSubmitButtonText() {
+    if (this.state.newPost) {
+      return "Submit";
+    } else {
+      return "Update Submission"
+    }
+  }
+
   editorView() {
     const editorState = this.state.editorState;
     return (
@@ -180,7 +225,7 @@ export default class MainEditor extends React.Component {
         <hr/>
         <h2>Output:</h2>
         <pre className="output">{this.state.output}</pre>
-        <button onClick={this.onSubmitButtonClick}>Submit!</button>
+        <button onClick={this.onSubmitButtonClick}>{this.getSubmitButtonText()}</button>
       </div>
     );
   }
