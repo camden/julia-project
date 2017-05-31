@@ -1,6 +1,10 @@
 import React from 'react';
 import { Editor } from 'react-draft-wysiwyg';
-import { EditorState } from 'draft-js';
+import { 
+  convertToRaw, 
+  convertFromRaw, 
+  EditorState 
+} from 'draft-js';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import draftToHtml from 'draftjs-to-html';
 import { Link } from 'react-router-dom';
@@ -20,7 +24,7 @@ const toolbar = {
 export default class MainEditor extends React.Component {
   constructor(props) {
     super(props);
-    const titleOptions = [
+    const categoryOptions = [
       "Preview New Features (GA)",
       "Preview Early Access",
       "Bug Fixes",
@@ -31,14 +35,15 @@ export default class MainEditor extends React.Component {
     this.state = {
       contentState: null,
       editorState: EditorState.createEmpty(),
-      selectValue: titleOptions[0],
+      category: categoryOptions[0],
       authorName: "",
-      titleOptions: titleOptions,
+      categoryOptions: categoryOptions,
       titleText: "",
       output: "",
       submitting: false,
       submitted: false,
-      newPost: true
+      newPost: true,
+      submissionId: -1
     };
 
     this.onContentStateChange = this.onContentStateChange.bind(this);
@@ -54,13 +59,27 @@ export default class MainEditor extends React.Component {
     this.loadDataIfURLParam();
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (
+      this.state.titleText !== prevState.titleText ||
+      this.state.authorName !== prevState.authorName ||
+      this.state.category !== prevState.category ||
+      this.state.contentState !== prevState.contentState
+    ) {
+      this.makeOutput();
+    }
+  }
+
   loadDataIfURLParam() {
     if (this.props.match.params.subId) {
       const subId = this.props.match.params.subId;
-      this.loadDataByPostId(subId);
+
       this.setState({
-        newPost: false
+        newPost: false,
+        submissionId: subId
       });
+
+      this.loadDataByPostId(subId);
     }
   }
 
@@ -78,7 +97,18 @@ export default class MainEditor extends React.Component {
       }
       return res.json();
     }).then((submission) => {
-      console.log("Got sub", submission);
+      console.log("got", submission);
+      this.setState({
+        titleText: submission.contentTitle,
+        authorName: submission.authorName,
+        contentState: submission.rawContentWithoutTitle,
+        editorState: EditorState.createWithContent(
+          convertFromRaw(
+            JSON.parse(submission.rawContentWithoutTitle)
+          )
+        ),
+        category: submission.category
+      })
     }).catch((err) => {
       throw err;
     });
@@ -100,7 +130,7 @@ export default class MainEditor extends React.Component {
 
   onSelectChange(event) {
     this.setState({
-      selectValue: event.target.value
+      category: event.target.value
     }, () => {
       this.makeOutput();
     });
@@ -140,16 +170,19 @@ export default class MainEditor extends React.Component {
 
     this.makeOutput();
 
+    console.log("before submit", this.state);
     fetch(config.baseUrl + '/submissions', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        category: this.state.selectValue,
+        category: this.state.category,
         content: this.state.output,
         contentTitle: this.state.titleText,
-        rawContentWithoutTitle: this.state.contentState,
+        rawContentWithoutTitle: JSON.stringify(
+          convertToRaw(this.state.editorState.getCurrentContent())
+        ),
         authorName: this.state.authorName
       })
     }).then((res) => {
@@ -183,14 +216,14 @@ export default class MainEditor extends React.Component {
   }
 
   getSelect() {
-    const selectOptions = this.state.titleOptions.map((title) => {
+    const selectOptions = this.state.categoryOptions.map((title) => {
       return (
         <option key={title} value={title}>{title}</option>
       );
     });
 
     return (
-      <select value={this.state.selectValue} onChange={this.onSelectChange}>
+      <select value={this.state.category} onChange={this.onSelectChange}>
         {selectOptions}
       </select>
     )
