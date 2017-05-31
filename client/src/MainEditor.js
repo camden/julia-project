@@ -48,17 +48,19 @@ export default class MainEditor extends React.Component {
     this.onAuthorNameChange = this.onAuthorNameChange.bind(this);
     this.onProcessButtonClick = this.onProcessButtonClick.bind(this);
     this.onSubmitButtonClick = this.onSubmitButtonClick.bind(this);
+  }
 
+  componentDidMount() {
     this.loadDataIfURLParam();
   }
 
   loadDataIfURLParam() {
     if (this.props.match.params.subId) {
       const subId = this.props.match.params.subId;
+      this.loadDataByPostId(subId);
       this.setState({
         newPost: false
       });
-      this.loadDataByPostId(subId);
     }
   }
 
@@ -215,11 +217,11 @@ export default class MainEditor extends React.Component {
         <div className="editor-input"><span className="editor-input-label">Your Name:</span> <input type="text" value={this.state.authorName} onChange={this.onAuthorNameChange} /></div>
         <div className="editor-input"><span className="editor-input-label">Content Options:</span> {this.getSelect()}</div>
         <div className="editor-input"><span className="editor-input-label">Dropdown Title:</span> <input type="text" value={this.state.titleText} onChange={this.onTitleTextChange} /></div>
-        <Editor 
+        <Editor
           toolbar={toolbar}
-          editorState={editorState} 
-          onEditorStateChange={this.onEditorStateChange} 
-          onContentStateChange={this.onContentStateChange} 
+          editorState={editorState}
+          onEditorStateChange={this.onEditorStateChange}
+          onContentStateChange={this.onContentStateChange}
         />
         <button onClick={this.onProcessButtonClick}>Process!</button>
         <hr/>

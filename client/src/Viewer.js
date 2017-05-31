@@ -10,7 +10,9 @@ export default class Viewer extends React.Component {
     this.state = {
       submissions: []
     }
+  }
 
+  componentDidMount() {
     this.fetchSubmissions();
   }
 
