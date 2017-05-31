@@ -28,7 +28,7 @@ export default class MainEditor extends React.Component {
       "Preview New Features (GA)",
       "Preview Early Access",
       "Bug Fixes",
-      "Application Integrations",
+      "Applications",
       "Announcements",
       "Mobile Releases"
     ];
