@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import config from './config.json';
 
@@ -44,6 +45,7 @@ export default class Viewer extends React.Component {
           <div>Author: {sub.authorName}</div>
           <div>Category: {sub.category}</div>
           <div>Title: {sub.contentTitle}</div>
+          <Link to={`/editor/${sub.id}`}>Edit this submission</Link>
           <pre>{sub.content}</pre>
         </li>
       );

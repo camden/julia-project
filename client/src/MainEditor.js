@@ -43,7 +43,8 @@ export default class MainEditor extends React.Component {
       submitting: false,
       submitted: false,
       newPost: true,
-      submissionId: -1
+      submissionId: -1,
+      loadingData: true
     };
 
     this.onContentStateChange = this.onContentStateChange.bind(this);
@@ -75,6 +76,7 @@ export default class MainEditor extends React.Component {
       const subId = this.props.match.params.subId;
 
       this.setState({
+        loadingData: true,
         newPost: false,
         submissionId: subId
       });
@@ -99,6 +101,7 @@ export default class MainEditor extends React.Component {
     }).then((submission) => {
       console.log("got", submission);
       this.setState({
+        loadingData: false,
         titleText: submission.contentTitle,
         authorName: submission.authorName,
         contentState: submission.rawContentWithoutTitle,
@@ -170,7 +173,6 @@ export default class MainEditor extends React.Component {
 
     this.makeOutput();
 
-    console.log("before submit", this.state);
     this.callSubmissionApi('POST').then((submission) => {
       console.log("New submission: ", submission);
       this.setState({
@@ -210,8 +212,16 @@ export default class MainEditor extends React.Component {
   }
 
   updatePost() {
+    this.setState({
+      submitting: true,
+      submitted: false
+    });
     this.callSubmissionApi('PUT').then((submission) => {
       console.log("updated:", submission);
+      this.setState({
+        submitting: false,
+        submitted: true
+      });
     });
   }
 
@@ -251,6 +261,14 @@ export default class MainEditor extends React.Component {
     }
   }
 
+  loadingView() {
+    if (this.state.loadingData || this.state.submitting) {
+      return (
+        <div className="loading-container">Loading!</div>
+      );
+    }
+  }
+
   editorView() {
     const editorState = this.state.editorState;
     return (
@@ -273,12 +291,21 @@ export default class MainEditor extends React.Component {
     );
   }
 
-  render() {
-    // TODO: route to "/submitted" route
+  getMainView() {
     if (this.state.submitted) {
+    // TODO: route to "/submitted" route
       return this.submittedView();
     } else {
       return this.editorView();
     }
+  }
+
+  render() {
+    return (
+      <div>
+        {this.loadingView()}
+        {this.getMainView()}
+      </div>
+    )
   }
 }
