@@ -82,6 +82,10 @@ export default class MainEditor extends React.Component {
       });
 
       this.loadDataByPostId(subId);
+    } else {
+      this.setState({
+        loadingData: false,
+      });
     }
   }
 
@@ -113,6 +117,9 @@ export default class MainEditor extends React.Component {
         category: submission.category
       })
     }).catch((err) => {
+      this.setState({
+        loadingData: false,
+      });
       throw err;
     });
   }
