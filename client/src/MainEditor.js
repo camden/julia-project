@@ -171,8 +171,19 @@ export default class MainEditor extends React.Component {
     this.makeOutput();
 
     console.log("before submit", this.state);
-    fetch(config.baseUrl + '/submissions', {
-      method: 'POST',
+    this.callSubmissionApi('POST').then((submission) => {
+      console.log("New submission: ", submission);
+      this.setState({
+        submitting: false,
+        submitted: true
+      });
+    });
+  }
+
+  // returns a promise with the new/updated submission
+  callSubmissionApi(method) {
+    return fetch(config.baseUrl + '/submissions', {
+      method: method,
       headers: {
         'Content-Type': 'application/json'
       },
@@ -183,7 +194,8 @@ export default class MainEditor extends React.Component {
         rawContentWithoutTitle: JSON.stringify(
           convertToRaw(this.state.editorState.getCurrentContent())
         ),
-        authorName: this.state.authorName
+        authorName: this.state.authorName,
+        subId: this.state.submissionId
       })
     }).then((res) => {
       if (!res.ok) {
@@ -192,19 +204,15 @@ export default class MainEditor extends React.Component {
         });
       }
       return res.json();
-    }).then((submission) => {
-      console.log("New submission: ", submission);
-      this.setState({
-        submitting: false,
-        submitted: true
-      });
     }).catch((err) => {
       throw err;
     });
   }
 
   updatePost() {
-    console.log("Updated " + this.props.match.params.subId);
+    this.callSubmissionApi('PUT').then((submission) => {
+      console.log("updated:", submission);
+    });
   }
 
   onSubmitButtonClick() {
