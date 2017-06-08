@@ -7,10 +7,12 @@ mongoose.Promise = global.Promise;
 import Submission from './models/submission';
 
 // Database
-console.log("Connecting to MongoDB...")
-const dbUrl = process.env.DB_BASE_URL || 'localhost';
-const dbPort = process.env.DB_PORT || '27017';
-mongoose.connect(`mongodb://${dbUrl}:${dbPort}/julia-server`).then(() => {
+const DB_URL = process.env.DB_BASE_URL || 'localhost';
+const DB_PORT = process.env.DB_PORT || '27017';
+const dbFinalUrl = `mongodb://${DB_URL}:${DB_PORT}/julia-server`;
+
+console.log(`Connecting to MongoDB @ ${dbFinalUrl}...`);
+mongoose.connect(dbFinalUrl).then(() => {
   main();
 }).catch((err) => {
   console.error("Could not connect to MongoDB. Is it running on port 27017?");
