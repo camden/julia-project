@@ -8,7 +8,9 @@ import Submission from './models/submission';
 
 // Database
 console.log("Connecting to MongoDB...")
-mongoose.connect('mongodb://localhost:27017/julia-server').then(() => {
+const dbUrl = process.env.DB_BASE_URL || 'localhost';
+const dbPort = process.env.DB_PORT || '27017';
+mongoose.connect(`mongodb://${dbUrl}:${dbPort}/julia-server`).then(() => {
   main();
 }).catch((err) => {
   console.error("Could not connect to MongoDB. Is it running on port 27017?");
