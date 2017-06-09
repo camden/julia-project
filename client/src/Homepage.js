@@ -5,7 +5,7 @@ export default class App extends React.Component {
   render() {
     return (
       <ul>
-        <li><Link to='/viewer'>View all submissions</Link></li>
+        <li><Link to='/viewer'>View All Submissions</Link></li>
         <li><Link to='/editor'>New Submission</Link></li>
       </ul>
     );
