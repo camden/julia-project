@@ -14,6 +14,7 @@ export default class App extends React.Component {
         <div>
           <Route exact path="/" component={Homepage}/>
           <Route path="/viewer" component={Viewer}/>
+          <Route path="/viewer-mock" render={() => <Viewer mock={true}></Viewer>} />
           <Route path="/editor/:subId?" component={MainEditor}/>
         </div>
       </Router>

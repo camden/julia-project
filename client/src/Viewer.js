@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import { getMockSubmissions } from './utils';
 import config from './config.json';
 
 export default class Viewer extends React.Component {
@@ -18,6 +19,12 @@ export default class Viewer extends React.Component {
   }
 
   fetchSubmissions() {
+    if (this.props.mock) {
+      this.setState({
+        submissions: getMockSubmissions()
+      });
+      return;
+    }
     const url = config.baseUrl + '/submissions';
     // const url = 'https://jsonplaceholder.typicode.com/posts';
     fetch(url, {
@@ -72,14 +79,14 @@ export default class Viewer extends React.Component {
     })
       .map((category) => {
         return (
-          <div>
+          <div key={category}>
             <h3>{category}</h3>
             <pre className="output">
               {this.state.submissions.filter((sub) => {
                 return sub.category === category;
               }).map((sub) => {
                 return (
-                  <div>
+                  <div key={sub.id}>
                     {sub.content}
                   </div>
                 )
