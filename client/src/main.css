@@ -31,6 +31,8 @@
     display: inline-block;
 }
 
+
+.all-content-container,
 .submissions-container {
     margin: 0 4rem;
 }

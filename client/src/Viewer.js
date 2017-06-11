@@ -97,7 +97,7 @@ export default class Viewer extends React.Component {
         )
       });
     return (
-      <div>
+      <div className="all-content-container">
         {subsByCategory}
       </div>
     );
@@ -105,7 +105,7 @@ export default class Viewer extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="viewer">
         {this.getAllContent()}
         <hr />
         {this.getSubmissions()}
