@@ -156,8 +156,10 @@ export default class SubmissionEditor extends React.Component {
   }
 
   onReleaseSelectChange(event) {
+    debugger;
+    const release = this.state.fetchedReleaseOptions.find((rel) => rel.id == event.target.value);
     this.setState({
-      release: event.target.value
+      release: release
     });
   }
 
@@ -210,7 +212,6 @@ export default class SubmissionEditor extends React.Component {
 
   // returns a promise with the new/updated submission
   callSubmissionApi(method) {
-    debugger;
     return fetch(config.baseUrl + '/submissions', {
       method: method,
       headers: {
@@ -264,12 +265,12 @@ export default class SubmissionEditor extends React.Component {
   getReleaseSelect() {
     const selectOptions = this.state.fetchedReleaseOptions.map((release) => {
       return (
-        <option key={release.name} value={release.name}>{release.name} ({release.type})</option>
+        <option key={release.id} value={release.id}>{release.name} ({release.type})</option>
       );
     });
 
     return (
-      <select value={this.state.release} onChange={this.onReleaseSelectChange}>
+      <select value={this.state.release.id} onChange={this.onReleaseSelectChange}>
         {selectOptions}
       </select>
     )

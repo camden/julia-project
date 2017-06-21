@@ -34,7 +34,6 @@ export default class SubmissionsViewer extends React.Component {
   }
 
   getSubmissions() {
-    debugger;
     const subs = this.state.submissions.map((sub) => {
       return (
         <div className='submission' key={sub.id}>
