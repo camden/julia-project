@@ -92,8 +92,8 @@ export default class ReleaseEditor extends React.Component {
       body: JSON.stringify({
         name: this.state.name,
         type: this.state.type,
-        previewBeginDate: this.state.previewBeginDate.toJson(),
-        prodBeginDate: this.state.prodBeginDate.toJson(),
+        previewBeginDate: this.state.previewBeginDate,
+        prodBeginDate: this.state.prodBeginDate,
         releaseId: this.state.releaseId
       })
     }).then((res) => {
