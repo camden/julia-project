@@ -1,5 +1,7 @@
 import moment from 'moment';
 
+import config from './config.json';
+
 const getMockSubmissions = function() {
   return [
     {
@@ -20,6 +22,21 @@ const getMockSubmissions = function() {
   ]
 }
 
+const fetchData = function(apiUrl) {
+    const url = config.baseUrl + apiUrl;
+    return fetch(url, {
+      method: 'GET'
+    }).then((res) => {
+      if (!res.ok) {
+        return res.json().then((err) => {
+          throw err;
+        });
+      }
+      return res.json();
+    });
+}
+
 module.exports = {
-  getMockSubmissions
+  getMockSubmissions,
+  fetchData
 };

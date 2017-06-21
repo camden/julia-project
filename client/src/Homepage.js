@@ -1,13 +1,13 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import ReleaseViewer from './ReleaseViewer';
 
 export default class App extends React.Component {
   render() {
     return (
-      <ul>
-        <li><Link to='/viewer'>View All Submissions</Link></li>
-        <li><Link to='/editor'>New Submission</Link></li>
-      </ul>
+      <div>
+        <h1>Releases</h1>
+        <ReleaseViewer />
+      </div>
     );
   }
 }

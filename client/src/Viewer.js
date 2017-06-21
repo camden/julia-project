@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import { getMockSubmissions } from './utils';
+import { getMockSubmissions, fetchData } from './utils';
 import config from './config.json';
 
 export default class Viewer extends React.Component {
@@ -25,23 +25,11 @@ export default class Viewer extends React.Component {
       });
       return;
     }
-    const url = config.baseUrl + '/submissions';
-    // const url = 'https://jsonplaceholder.typicode.com/posts';
-    fetch(url, {
-      method: 'GET'
-    }).then((res) => {
-      if (!res.ok) {
-        return res.json().then((err) => {
-          throw err;
-        });
-      }
-      return res.json();
-    }).then((submissions) => {
+
+    fetchData('/submissions').then((submissions) => {
       this.setState({
         submissions: submissions
       });
-    }).catch((err) => {
-      throw err;
     });
   }
 
