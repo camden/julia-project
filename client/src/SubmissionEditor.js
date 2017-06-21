@@ -21,7 +21,7 @@ const toolbar = {
   },
 };
 
-export default class MainEditor extends React.Component {
+export default class SubmissionEditor extends React.Component {
   constructor(props) {
     super(props);
     const categoryOptions = [
@@ -52,7 +52,6 @@ export default class MainEditor extends React.Component {
     this.onSelectChange = this.onSelectChange.bind(this);
     this.onTitleTextChange = this.onTitleTextChange.bind(this);
     this.onAuthorNameChange = this.onAuthorNameChange.bind(this);
-    this.onProcessButtonClick = this.onProcessButtonClick.bind(this);
     this.onSubmitButtonClick = this.onSubmitButtonClick.bind(this);
   }
 
@@ -166,10 +165,6 @@ export default class MainEditor extends React.Component {
     this.setState({
       output: nextOutput
     });
-  }
-
-  onProcessButtonClick() {
-    this.makeOutput();
   }
 
   submitNewPost() {
@@ -289,7 +284,6 @@ export default class MainEditor extends React.Component {
           onEditorStateChange={this.onEditorStateChange}
           onContentStateChange={this.onContentStateChange}
         />
-        <button onClick={this.onProcessButtonClick}>Process!</button>
         <hr/>
         <h2>Output:</h2>
         <pre className="output">{this.state.output}</pre>

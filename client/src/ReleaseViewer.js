@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import { fetchData } from './utils';
 
@@ -24,12 +25,14 @@ export default class ReleaseViewer extends React.Component {
   }
 
   listReleases() {
-    const releases = this.state.releases.map((rel) => {
+    const releases = this.state.releases.sort((r1, r2) => {
+      return r1.prodBeginDate.getTime() - r2.prodBeginDate.getTime();
+    }).map((rel) => {
       return (
         <div>
           <h3>{rel.name}</h3>
         </div>
-      )
+      );
     });
 
     return (
@@ -42,8 +45,8 @@ export default class ReleaseViewer extends React.Component {
   render() {
     return (
       <div>
-        <h1>Releases</h1>
         {this.listReleases()}
+        <Link to='new-release'>Create New Release</Link>
       </div>
     );
   }

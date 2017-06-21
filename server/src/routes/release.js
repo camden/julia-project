@@ -3,25 +3,25 @@ import Release from '../models/release';
 const releasesRoutes = (router) => {
   router.route('/releases')
     .post((req, res) => {
-      // const sub = new Submission();
-      // sub.category = req.body.category;
-      // sub.authorName = req.body.authorName;
-      // sub.content = req.body.content;
-      // sub.rawContentWithoutTitle = req.body.rawContentWithoutTitle;
-      // sub.contentTitle = req.body.contentTitle;
+      const rel = new Release();
+      rel.name = req.body.name;
+      rel.type = req.body.type;
+      rel.submissions = req.body.submissions || [];
+      rel.previewBeginDate = req.body.previewBeginDate;
+      rel.prodBeginDate = req.body.prodBeginDate;
 
-      // sub.save((err, submission) => {
-      //   if (err) {
-      //     if (err.name === "ValidationError") {
-      //       res.status(400)
-      //     } else {
-      //       res.status(500);
-      //     }
-      //     res.send(err);
-      //   } else {
-      //     res.json(submission);
-      //   }
-      // })
+      rel.save((err, release) => {
+        if (err) {
+          if (err.name === "ValidationError") {
+            res.status(400)
+          } else {
+            res.status(500);
+          }
+          res.send(err);
+        } else {
+          res.json(release);
+        }
+      });
     })
     .put((req, res) => {
       // const subId = JSON.parse(req.body.subId);

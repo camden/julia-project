@@ -10,8 +10,7 @@ const ReleaseSchema = new mongoose.Schema({
   },
   submissions: {
     type: [SubmissionSchema],
-    default: [],
-    required: true
+    default: []
   },
   type: {
     type: String,
