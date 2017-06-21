@@ -29,5 +29,9 @@ const SubmissionSchema = new mongoose.Schema({
   }
 });
 
-SubmissionSchema.plugin(autoIncrement, {inc_field: 'id'});
-export default mongoose.model('Submission', SubmissionSchema);
+SubmissionSchema.plugin(autoIncrement, {inc_field: 'id', id: 'submission_id'});
+
+module.exports = {
+  schema: SubmissionSchema,
+  model: mongoose.model('Submission', SubmissionSchema)
+};
