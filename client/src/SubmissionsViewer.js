@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { getMockSubmissions, fetchData } from './utils';
 import config from './config.json';
 
-export default class Viewer extends React.Component {
+export default class SubmissionsViewer extends React.Component {
 
   constructor(props) {
     super(props);

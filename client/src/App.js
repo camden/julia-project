@@ -4,19 +4,21 @@ import {
   Route,
 } from 'react-router-dom'
 
-import Viewer from './Viewer';
+import SubmissionsViewer from './SubmissionsViewer';
 import SubmissionEditor from './SubmissionEditor';
 import ReleaseEditor from './ReleaseEditor';
 import Homepage from './Homepage';
+
+import './main.css';
 
 export default class App extends React.Component {
   render() {
     return (
       <Router>
-        <div>
+        <div className='app'>
           <Route exact path="/" component={Homepage}/>
-          <Route path="/viewer" component={Viewer}/>
-          <Route path="/viewer-mock" render={() => <Viewer mock={true}></Viewer>} />
+          <Route path="/viewer" component={SubmissionsViewer}/>
+          <Route path="/viewer-mock" render={() => <SubmissionsViewer mock={true}></SubmissionsViewer>} />
           <Route path="/new-release" component={ReleaseEditor} />
           <Route path="/editor/:subId?" component={SubmissionEditor}/>
         </div>

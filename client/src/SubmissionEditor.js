@@ -10,7 +10,6 @@ import draftToHtml from 'draftjs-to-html';
 import { Link } from 'react-router-dom';
 
 import config from './config.json';
-import './main.css';
 import getDropdownMarkup from "./getDropdownMarkup";
 
 //TODO refactor
