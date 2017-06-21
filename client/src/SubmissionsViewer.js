@@ -34,6 +34,7 @@ export default class SubmissionsViewer extends React.Component {
   }
 
   getSubmissions() {
+    debugger;
     const subs = this.state.submissions.map((sub) => {
       return (
         <div className='submission' key={sub.id}>
@@ -41,6 +42,7 @@ export default class SubmissionsViewer extends React.Component {
           <div className='submission-category'>Category: {sub.category}</div>
           <div className='submission-title'>Title: {sub.contentTitle}</div>
           <div className='submission-created-date'>{sub.createdDate}</div>
+          <div className='submission-release'>Release: {sub.release.name}</div>
           <Link to={`/editor/${sub.id}`} className='submission-edit-link'>Edit this submission</Link>
           <pre className='submission-content'>{sub.content}</pre>
         </div>

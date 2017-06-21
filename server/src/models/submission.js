@@ -14,6 +14,11 @@ const SubmissionSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  release: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Release',
+    required: true
+  },
   rawContentWithoutTitle: {
     type: mongoose.Schema.Types.Mixed,
     required: true

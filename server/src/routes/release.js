@@ -1,4 +1,4 @@
-import Release from '../models/release';
+import { model as Release } from '../models/release';
 
 const releasesRoutes = (router) => {
   router.route('/releases')
@@ -6,7 +6,6 @@ const releasesRoutes = (router) => {
       const rel = new Release();
       rel.name = req.body.name;
       rel.type = req.body.type;
-      rel.submissions = req.body.submissions || [];
       rel.previewBeginDate = req.body.previewBeginDate;
       rel.prodBeginDate = req.body.prodBeginDate;
 

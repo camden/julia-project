@@ -9,6 +9,7 @@ const submissionRoutes = (router) => {
       sub.content = req.body.content;
       sub.rawContentWithoutTitle = req.body.rawContentWithoutTitle;
       sub.contentTitle = req.body.contentTitle;
+      sub.release = req.body.release;
 
       sub.save((err, submission) => {
         if (err) {
@@ -30,7 +31,8 @@ const submissionRoutes = (router) => {
         authorName: req.body.authorName,
         content: req.body.content,
         rawContentWithoutTitle: req.body.rawContentWithoutTitle,
-        contentTitle: req.body.contentTitle
+        contentTitle: req.body.contentTitle,
+        release: req.body.release
       }, { new: true }, (err, submission) => {
         if (err) {
           if (err.name === "ValidationError") {
@@ -45,7 +47,7 @@ const submissionRoutes = (router) => {
       });
     })
     .get((req, res) => {
-      Submission.find((err, submissions) => {
+      Submission.find().populate('release').then((err, submissions) => {
         if (err) {
           res.send(err);
         } else {
@@ -56,7 +58,7 @@ const submissionRoutes = (router) => {
 
   router.route('/submissions/:subId')
     .get((req, res) => {
-      Submission.where({ id: req.params.subId }).findOne((err, sub) => {
+      Submission.where({ id: req.params.subId }).findOne().populate('release').then((err, sub) => {
         if (err) {
           res.send(err);
         } else {

@@ -1,16 +1,10 @@
 import mongoose from 'mongoose';
 import autoIncrement from 'mongoose-sequence';
 
-import { schema as SubmissionSchema } from './submission';
-
 const ReleaseSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true
-  },
-  submissions: {
-    type: [SubmissionSchema],
-    default: []
   },
   type: {
     type: String,
@@ -33,4 +27,8 @@ const ReleaseSchema = new mongoose.Schema({
 });
 
 ReleaseSchema.plugin(autoIncrement, {inc_field: 'id', id: 'release_id'});
-export default mongoose.model('Release', ReleaseSchema);
+
+module.exports = {
+  schema: ReleaseSchema,
+  model: mongoose.model('Release', ReleaseSchema)
+};

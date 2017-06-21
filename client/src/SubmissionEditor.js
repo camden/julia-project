@@ -9,6 +9,7 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import draftToHtml from 'draftjs-to-html';
 import { Link } from 'react-router-dom';
 
+import utils from './utils';
 import config from './config.json';
 import getDropdownMarkup from "./getDropdownMarkup";
 
@@ -38,17 +39,20 @@ export default class SubmissionEditor extends React.Component {
       authorName: "",
       categoryOptions: categoryOptions,
       titleText: "",
+      release: {},
       output: "",
+      fetchedReleaseOptions: [],
       submitting: false,
       submitted: false,
-      newPost: true,
+      newSubmission: true,
       submissionId: -1,
       loadingData: true
     };
 
     this.onContentStateChange = this.onContentStateChange.bind(this);
     this.onEditorStateChange = this.onEditorStateChange.bind(this);
-    this.onSelectChange = this.onSelectChange.bind(this);
+    this.onCategorySelectChange = this.onCategorySelectChange.bind(this);
+    this.onReleaseSelectChange = this.onReleaseSelectChange.bind(this);
     this.onTitleTextChange = this.onTitleTextChange.bind(this);
     this.onAuthorNameChange = this.onAuthorNameChange.bind(this);
     this.onSubmitButtonClick = this.onSubmitButtonClick.bind(this);
@@ -56,6 +60,7 @@ export default class SubmissionEditor extends React.Component {
 
   componentDidMount() {
     this.loadDataIfURLParam();
+    this.loadReleaseOptions();
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -69,17 +74,31 @@ export default class SubmissionEditor extends React.Component {
     }
   }
 
+  loadReleaseOptions() {
+    this.setState({
+      loadingData: true,
+    });
+
+    return utils.fetchData('/releases').then((releases) => {
+      this.setState({
+        fetchedReleaseOptions: releases,
+        release: releases.length > 0 ? releases[0] : [],
+        loadingData: false,
+      });
+    });
+  }
+
   loadDataIfURLParam() {
     if (this.props.match.params.subId) {
       const subId = this.props.match.params.subId;
 
       this.setState({
         loadingData: true,
-        newPost: false,
+        newSubmission: false,
         submissionId: subId
       });
 
-      this.loadDataByPostId(subId);
+      this.loadDataBySubmissionId(subId);
     } else {
       this.setState({
         loadingData: false,
@@ -87,7 +106,7 @@ export default class SubmissionEditor extends React.Component {
     }
   }
 
-  loadDataByPostId(subId) {
+  loadDataBySubmissionId(subId) {
     fetch(`${config.baseUrl}/submissions/${subId}`, {
       method: 'GET',
       headers: {
@@ -136,7 +155,13 @@ export default class SubmissionEditor extends React.Component {
     });
   }
 
-  onSelectChange(event) {
+  onReleaseSelectChange(event) {
+    this.setState({
+      release: event.target.value
+    });
+  }
+
+  onCategorySelectChange(event) {
     this.setState({
       category: event.target.value
     }, () => {
@@ -166,7 +191,7 @@ export default class SubmissionEditor extends React.Component {
     });
   }
 
-  submitNewPost() {
+  submitNewSubmission() {
     this.setState({
       submitting: true,
       submitted: false
@@ -185,6 +210,7 @@ export default class SubmissionEditor extends React.Component {
 
   // returns a promise with the new/updated submission
   callSubmissionApi(method) {
+    debugger;
     return fetch(config.baseUrl + '/submissions', {
       method: method,
       headers: {
@@ -198,7 +224,8 @@ export default class SubmissionEditor extends React.Component {
           convertToRaw(this.state.editorState.getCurrentContent())
         ),
         authorName: this.state.authorName,
-        subId: this.state.submissionId
+        subId: this.state.submissionId,
+        release: this.state.release._id
       })
     }).then((res) => {
       if (!res.ok) {
@@ -212,7 +239,7 @@ export default class SubmissionEditor extends React.Component {
     });
   }
 
-  updatePost() {
+  updateSubmission() {
     this.setState({
       submitting: true,
       submitted: false
@@ -227,14 +254,28 @@ export default class SubmissionEditor extends React.Component {
   }
 
   onSubmitButtonClick() {
-    if (this.state.newPost) {
-      this.submitNewPost();
+    if (this.state.newSubmission) {
+      this.submitNewSubmission();
     } else {
-      this.updatePost();
+      this.updateSubmission();
     }
   }
 
-  getSelect() {
+  getReleaseSelect() {
+    const selectOptions = this.state.fetchedReleaseOptions.map((release) => {
+      return (
+        <option key={release.name} value={release.name}>{release.name} ({release.type})</option>
+      );
+    });
+
+    return (
+      <select value={this.state.release} onChange={this.onReleaseSelectChange}>
+        {selectOptions}
+      </select>
+    )
+  }
+
+  getCategorySelect() {
     const selectOptions = this.state.categoryOptions.map((title) => {
       return (
         <option key={title} value={title}>{title}</option>
@@ -242,10 +283,10 @@ export default class SubmissionEditor extends React.Component {
     });
 
     return (
-      <select value={this.state.category} onChange={this.onSelectChange}>
+      <select value={this.state.category} onChange={this.onCategorySelectChange}>
         {selectOptions}
       </select>
-    )
+    );
   }
 
   submittedView() {
@@ -255,7 +296,7 @@ export default class SubmissionEditor extends React.Component {
   }
 
   getSubmitButtonText() {
-    if (this.state.newPost) {
+    if (this.state.newSubmission) {
       return "Submit";
     } else {
       return "Update Submission"
@@ -275,8 +316,9 @@ export default class SubmissionEditor extends React.Component {
     return (
       <div className="editor-container">
         <div className="editor-input"><span className="editor-input-label">Your Name:</span> <input type="text" value={this.state.authorName} onChange={this.onAuthorNameChange} /></div>
-        <div className="editor-input"><span className="editor-input-label">Content Options:</span> {this.getSelect()}</div>
+        <div className="editor-input"><span className="editor-input-label">Content Options:</span> {this.getCategorySelect()}</div>
         <div className="editor-input"><span className="editor-input-label">Dropdown Title:</span> <input type="text" value={this.state.titleText} onChange={this.onTitleTextChange} /></div>
+        <div className="editor-input"><span className="editor-input-label">Release:</span> {this.getReleaseSelect()}</div>
         <Editor
           toolbar={toolbar}
           editorState={editorState}
