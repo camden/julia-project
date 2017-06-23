@@ -114,14 +114,20 @@ export default class SubmissionsViewer extends React.Component {
     }
   }
 
+  getNewSubmissionButton() {
+    return (	
+      <Link to='/editor' className='button-link'>
+        Create New Submission
+      </Link>
+    );
+  }
+
   render() {
     return (
       <div className="viewer">
         <div className='section-header'>
           <h1 className='section-title'>{this.getSectionTitle()}</h1>
-          <Link to='/editor' className='button-link'>
-            Create New Submission
-          </Link>
+          {this.getNewSubmissionButton()}
         </div>
         {this.getAllContent()}
         <hr />

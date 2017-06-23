@@ -136,7 +136,10 @@ export default class ReleaseEditor extends React.Component {
 
   submittedView() {
     return (
-      <Link to="/">Return to Homepage</Link>
+      <div>
+        Success!
+        <Link to="/">Return to Homepage</Link>
+      </div>
     );
   }
 
