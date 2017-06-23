@@ -8,12 +8,14 @@
 }
 
 .content {
-    padding-top: 1rem;
+    padding-top: 4rem;
 }
 
 .toolbar {
     background-color: #42a5f5;
-    position: sticky;
+    position: fixed;
+    width: 100%;
+    z-index: 100;
 }
 
 .toolbar-item {
