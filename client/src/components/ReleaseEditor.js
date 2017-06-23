@@ -1,7 +1,9 @@
 import React from 'react';
 import moment from 'moment';
-
 import { Link } from 'react-router-dom';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+
 import config from '../config.json';
 import utils from '../utils';
 
@@ -14,8 +16,8 @@ export default class ReleaseEditor extends React.Component {
       submissions: [],
       type: "minor",
       // TODO set default dates
-      previewBeginDate: new Date(),
-      prodBeginDate: new Date(),
+      previewBeginDate: moment(),
+      prodBeginDate: moment(),
       submitting: false,
       submitted: false,
       newRelease: true,
@@ -23,6 +25,8 @@ export default class ReleaseEditor extends React.Component {
       loadingData: true
     };
 
+    this.handlePreviewDatePickerChange = this.handlePreviewDatePickerChange.bind(this);
+    this.handleProdDatePickerChange = this.handleProdDatePickerChange.bind(this);
     this.onSubmitButtonClick = this.onSubmitButtonClick.bind(this);
     this.onNameChange = this.onNameChange.bind(this);
     this.onTypeSelectChange = this.onTypeSelectChange.bind(this);
@@ -164,6 +168,18 @@ export default class ReleaseEditor extends React.Component {
     }
   }
 
+  handlePreviewDatePickerChange(newDate) {
+    this.setState({
+      previewBeginDate: newDate
+    });
+  }
+
+  handleProdDatePickerChange(newDate) {
+    this.setState({
+      prodBeginDate: newDate
+    });
+  }
+
   getTypeSelect() {
     return (
       <select value={this.state.type} onChange={this.onTypeSelectChange}>
@@ -177,10 +193,20 @@ export default class ReleaseEditor extends React.Component {
     const editorState = this.state.editorState;
     return (
       <div className="editor-container">
-        <div className="editor-input"><span className="editor-input-label">Release Name:</span> <input type="text" value={this.state.name} onChange={this.onNameChange} /></div>
-        <div className="editor-input"><span className="editor-input-label">Type:</span> {this.getTypeSelect()}</div>
-        <div className="editor-input"><span className="editor-input-label">Preview Begin Date:</span> add date picker here</div>
-        <div className="editor-input"><span className="editor-input-label">Prod Begin Date:</span> add date picker here</div>
+        <div className="editor-input">
+          <span className="editor-input-label">Release Name:</span> <input type="text" value={this.state.name} onChange={this.onNameChange} />
+      </div>
+        <div className="editor-input">
+          <span className="editor-input-label">Type:</span> {this.getTypeSelect()}
+        </div>
+        <div className="editor-input">
+          <span className="editor-input-label">Preview Begin Date:</span>
+          <DatePicker selected={this.state.previewBeginDate} onChange={this.handlePreviewDatePickerChange} />
+        </div>
+        <div className="editor-input">
+          <span className="editor-input-label">Prod Begin Date:</span>
+          <DatePicker selected={this.state.prodBeginDate} onChange={this.handleProdDatePickerChange} />
+        </div>
         <button onClick={this.onSubmitButtonClick}>{this.getSubmitButtonText()}</button>
       </div>
     );
