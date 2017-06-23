@@ -1,10 +1,6 @@
-body {
-    height: 100vh;
-}
-
 .toolbar-content,
 .content {
-    margin: 0 4rem;
+    margin: 0 10rem;
 }
 
 .app {

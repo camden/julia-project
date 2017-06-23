@@ -38,7 +38,7 @@ export default class ReleasesViewer extends React.Component {
 
   listReleases() {
     const releases = this.state.releases.sort((r1, r2) => {
-      return r1.prodBeginDate.getTime() - r2.prodBeginDate.getTime();
+      return r2.prodBeginDate.getTime() - r1.prodBeginDate.getTime();
     }).map((rel) => {
       return (
         <div className='release'>

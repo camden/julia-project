@@ -216,7 +216,12 @@ export default class ReleaseEditor extends React.Component {
   }
 
   isFormValid() {
-    return this.state.name && this.state.type && this.state.previewBeginDate && this.state.prodBeginDate;
+    return this.state.name 
+      && this.state.type 
+      && this.state.previewBeginDate 
+      && this.state.previewBeginDate.isValid()
+      && this.state.prodBeginDate
+      && this.state.prodBeginDate.isValid();
   }
 
   getMainView() {
