@@ -9,9 +9,9 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import draftToHtml from 'draftjs-to-html';
 import { Link } from 'react-router-dom';
 
-import utils from './utils';
-import config from './config.json';
-import getDropdownMarkup from "./getDropdownMarkup";
+import utils from '../utils';
+import config from '../config.json';
+import getDropdownMarkup from "../getDropdownMarkup";
 
 //TODO refactor
 const toolbar = {

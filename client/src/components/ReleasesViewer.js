@@ -2,7 +2,7 @@ import React from 'react';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
 
-import { fetchData } from './utils';
+import { fetchData } from '../utils';
 
 export default class ReleasesViewer extends React.Component {
   constructor(props) {

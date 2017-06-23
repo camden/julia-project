@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import { getMockSubmissions, fetchData } from './utils';
-import config from './config.json';
+import { getMockSubmissions, fetchData } from '../utils';
+import config from '../config.json';
 
 export default class SubmissionsViewer extends React.Component {
 

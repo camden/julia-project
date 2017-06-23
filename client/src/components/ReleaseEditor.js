@@ -2,8 +2,8 @@ import React from 'react';
 import moment from 'moment';
 
 import { Link } from 'react-router-dom';
-import config from './config.json';
-import utils from './utils';
+import config from '../config.json';
+import utils from '../utils';
 
 export default class ReleaseEditor extends React.Component {
   constructor(props) {
