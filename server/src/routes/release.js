@@ -25,13 +25,17 @@ const releasesRoutes = (router) => {
       });
     })
     .put((req, res) => {
-
-      Release.findOneAndUpdate({ id: req.body.relId }, {
+      const relId = JSON.parse(req.body.releaseId);
+      Release.findOneAndUpdate({ id: relId }, {
         name: req.body.name,
         type: req.body.type,
         previewBeginDate: req.body.previewBeginDate,
-        prodBeginDate: req.body.prodBeginData
-      }, { new: true }, (err, release) => {
+        prodBeginDate: req.body.prodBeginDate
+      }, (err, release) => {
+        if (!release) {
+          res.status(404).send('Release not found.');
+        }
+        
         if (err) {
           if (err.name === "ValidationError") {
             res.status(400)
