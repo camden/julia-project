@@ -64,9 +64,14 @@ const releasesRoutes = (router) => {
 
   router.route('/releases/:relId/submissions')
     .get((req, res) => {
-      Release.where({ id: req.params.relId }).findOne()
+      Release
+        .where({ id: req.params.relId })
+        .findOne()
         .then((rel) => {
-          Submission.where({ release: rel._id }).find()
+          Submission
+            .where({ release: rel._id })
+            .find()
+            .populate('release')
             .then((subs) => {
               processRes(res, subs);
             });

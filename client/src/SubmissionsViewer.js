@@ -10,7 +10,8 @@ export default class SubmissionsViewer extends React.Component {
     super(props);
 
     this.state = {
-      submissions: []
+      submissions: [],
+      release: null
     }
   }
 
@@ -31,9 +32,15 @@ export default class SubmissionsViewer extends React.Component {
     if (this.props.match.params.releaseId) {
       const releaseId = this.props.match.params.releaseId;
       url = `/releases/${releaseId}/submissions`;
+      fetchData(`/releases/${releaseId}`).then((release) => {
+        this.setState({
+          release: release
+        });
+      });
     }
 
     fetchData(url).then((submissions) => {
+      console.log(submissions);
       this.setState({
         submissions: submissions
       });
@@ -99,9 +106,23 @@ export default class SubmissionsViewer extends React.Component {
     );
   }
 
+  getSectionTitle() {
+    if (this.state.release) {
+      return `Submissions for Release: '${this.state.release.name}'`;
+    } else {
+      return 'All Submissions';
+    }
+  }
+
   render() {
     return (
       <div className="viewer">
+        <div className='section-header'>
+          <h1 className='section-title'>{this.getSectionTitle()}</h1>
+          <Link to='/editor' className='button-link'>
+            Create New Submission
+          </Link>
+        </div>
         {this.getAllContent()}
         <hr />
         {this.getSubmissions()}

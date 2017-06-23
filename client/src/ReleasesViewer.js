@@ -45,6 +45,7 @@ export default class ReleasesViewer extends React.Component {
           <h3>{rel.name} - {rel.type}</h3>
           <h3>Preview Begin Date: {this.formatDate(rel.previewBeginDate)}</h3>
           <h3>Production Begin Date: {this.formatDate(rel.prodBeginDate)}</h3>
+          <h4><Link to={`/viewer/${rel.id}`}>View Submissions for this Release</Link></h4>
         </div>
       );
     });
