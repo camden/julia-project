@@ -117,6 +117,7 @@ h5 {
 .section-header {
     display: flex;
     align-items: center;
+    font-size: 17px
 }
 
 .section-title {
