@@ -1,4 +1,6 @@
 import { model as Release } from '../models/release';
+import { model as Submission } from '../models/submission';
+import { processRes } from '../utils';
 
 const releasesRoutes = (router) => {
   router.route('/releases')
@@ -44,11 +46,11 @@ const releasesRoutes = (router) => {
       // });
     })
     .get((req, res) => {
-      Release.find((err, releases) => {
+      Release.find().then((releases) => {
+        processRes(res, releases);
+      }).catch((err) => {
         if (err) {
           res.send(err);
-        } else {
-          res.json(releases);
         }
       })
     });
@@ -56,12 +58,24 @@ const releasesRoutes = (router) => {
   router.route('/releases/:relId')
     .get((req, res) => {
       Release.where({ id: req.params.relId }).findOne((err, rel) => {
-        if (err) {
-          res.send(err);
-        } else {
-          res.json(rel);
-        }
+        processRes(res, err, rel);
       });
+    });
+
+  router.route('/releases/:relId/submissions')
+    .get((req, res) => {
+      Release.where({ id: req.params.relId }).findOne()
+        .then((rel) => {
+          Submission.where({ release: rel._id }).find()
+            .then((subs) => {
+              processRes(res, subs);
+            });
+        })
+        .catch((err) => {
+          if (err) {
+            res.send(err);
+          }
+        });
     });
 }
 
