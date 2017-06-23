@@ -12,24 +12,26 @@
 }
 
 .toolbar {
-    background-color: #42a5f5;
-    position: fixed;
-    width: 100%;
+    background-color: #F9F9F9;
+    position: fixed; /* Set the navbar to fixed position */
+    top: 0; /* Position the navbar at the top of the page */
+    width: 100%; /* Full width */
     z-index: 100;
 }
 
 .toolbar-item {
-    color: white;
+    color: #005986;
+    font-family: "Proxima-Nova Light", Helvetica, Arial, sans-serif;
     text-decoration: none;
     font-weight: bold;
-    font-size: 1rem;
+    font-size: 23px;
     padding: 1rem;
     display: inline-block;
     transition: background-color 150ms ease-out;
 }
 
 .toolbar-item:hover {
-    background-color: #64b5f6;
+    background-color: #2084BA;
 }
 
 .editor-container {
