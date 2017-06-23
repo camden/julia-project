@@ -138,7 +138,7 @@ export default class ReleaseEditor extends React.Component {
     return (
       <div>
         Success!
-        <Link to="/">Return to Homepage</Link>
+        <Link to="/"> Return to Homepage</Link>
       </div>
     );
   }
