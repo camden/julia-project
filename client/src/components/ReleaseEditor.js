@@ -207,9 +207,14 @@ export default class ReleaseEditor extends React.Component {
           <span className="editor-input-label">Prod Begin Date:</span>
           <DatePicker selected={this.state.prodBeginDate} onChange={this.handleProdDatePickerChange} />
         </div>
-        <button onClick={this.onSubmitButtonClick}>{this.getSubmitButtonText()}</button>
+
+        <button onClick={this.onSubmitButtonClick} disabled={!this.isFormValid()}>{this.getSubmitButtonText()}</button>
       </div>
     );
+  }
+
+  isFormValid() {
+    return this.state.name && this.state.type && this.state.previewBeginDate && this.state.prodBeginDate;
   }
 
   getMainView() {

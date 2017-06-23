@@ -329,9 +329,13 @@ export default class SubmissionEditor extends React.Component {
         <hr/>
         <h2>Output:</h2>
         <pre className="output">{this.state.output}</pre>
-        <button onClick={this.onSubmitButtonClick}>{this.getSubmitButtonText()}</button>
+        <button onClick={this.onSubmitButtonClick} disabled={!this.isFormValid()}>{this.getSubmitButtonText()}</button>
       </div>
     );
+  }
+
+  isFormValid() {
+    return this.state.authorName && this.state.category && this.state.titleText;
   }
 
   getMainView() {
