@@ -26,7 +26,14 @@ export default class SubmissionsViewer extends React.Component {
       return;
     }
 
-    fetchData('/submissions').then((submissions) => {
+    let url = '/submissions';
+
+    if (this.props.match.params.releaseId) {
+      const releaseId = this.props.match.params.releaseId;
+      url = `/releases/${releaseId}/submissions`;
+    }
+
+    fetchData(url).then((submissions) => {
       this.setState({
         submissions: submissions
       });
