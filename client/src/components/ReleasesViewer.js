@@ -42,11 +42,29 @@ export default class ReleasesViewer extends React.Component {
     }).map((rel) => {
       return (
         <div className='release'>
-          <h3>{rel.name} - {rel.type}</h3>
-          <h3>Preview Begin Date: {this.formatDate(rel.previewBeginDate)}</h3>
-          <h3>Production Begin Date: {this.formatDate(rel.prodBeginDate)}</h3>
-          <h4><Link to={`/viewer/${rel.id}`}>View Submissions for this Release</Link></h4>
-          <h4><Link to={`/editor/release/${rel.id}`}>Edit this Release</Link></h4>
+          <div className='row'>
+            <h3 className='release-item release-name'>{rel.name} &middot; [{rel.type}]</h3>
+            <h3 className='release-item'>
+              <div className='row info-row'>
+                <span className='release-item-title'>Preview Begin Date</span>
+              </div>
+              <div className='row info-row'>
+                {this.formatDate(rel.previewBeginDate)}
+              </div>
+            </h3>
+            <h3 className='release-item'>
+              <div className='row info-row'>
+                <span className='release-item-title'>Production Begin Date</span>
+              </div>
+              <div className='row info-row'>
+                {this.formatDate(rel.prodBeginDate)}
+              </div>
+            </h3>
+          </div>
+          <div className='row release-button-row'>
+            <Link to={`/viewer/${rel.id}`} className='release-link'>View Submissions</Link>
+            <Link to={`/editor/release/${rel.id}`} className='release-link'>Edit</Link>
+          </div>
         </div>
       );
     });
@@ -63,7 +81,7 @@ export default class ReleasesViewer extends React.Component {
       <div>
         <div className='section-header'>
           <h1 className='section-title'>Releases</h1>
-          <Link to='/editor/release' className='button-link'>
+          <Link to='/editor/release' className='button-link section-action-item'>
             Create New Release
           </Link>
         </div>
