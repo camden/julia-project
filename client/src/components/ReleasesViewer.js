@@ -63,7 +63,7 @@ export default class ReleasesViewer extends React.Component {
       <div>
         <div className='section-header'>
           <h1 className='section-title'>Releases</h1>
-          <Link to='new-release' className='button-link'>
+          <Link to='/editor/release' className='button-link'>
             Create New Release
           </Link>
         </div>
