@@ -21,16 +21,16 @@ export default class App extends React.Component {
           <Toolbar>
             <ToolbarItem title='Home' linksTo='/' />
             <ToolbarItem title='All Submissions' linksTo='/viewer' />
-            <ToolbarItem title='New Release' linksTo='/new-release' />
-            <ToolbarItem title='New Submission' linksTo='/editor' />
+            <ToolbarItem title='New Release' linksTo='/editor/release' />
+            <ToolbarItem title='New Submission' linksTo='/editor/submission' />
           </Toolbar>
           <div className='app'>
             <div className='content'>
               <Route exact path="/" component={Homepage}/>
               <Route path="/viewer/:releaseId?" component={SubmissionsViewer}/>
               <Route path="/viewer-mock" render={() => <SubmissionsViewer mock={true}></SubmissionsViewer>} />
-              <Route path="/new-release" component={ReleaseEditor} />
-              <Route path="/editor/:subId?" component={SubmissionEditor}/>
+              <Route path="/editor/release/:relId?" component={ReleaseEditor} />
+              <Route path="/editor/submission/:subId?" component={SubmissionEditor}/>
             </div>
           </div>
         </div>

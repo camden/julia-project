@@ -25,25 +25,24 @@ const releasesRoutes = (router) => {
       });
     })
     .put((req, res) => {
-      // const subId = JSON.parse(req.body.subId);
-      // Submission.findOneAndUpdate({ id: subId }, {
-      //   category: req.body.category,
-      //   authorName: req.body.authorName,
-      //   content: req.body.content,
-      //   rawContentWithoutTitle: req.body.rawContentWithoutTitle,
-      //   contentTitle: req.body.contentTitle
-      // }, { new: true }, (err, submission) => {
-      //   if (err) {
-      //     if (err.name === "ValidationError") {
-      //       res.status(400)
-      //     } else {
-      //       res.status(500);
-      //     }
-      //     res.send(err);
-      //   } else {
-      //     res.json(submission);
-      //   }
-      // });
+
+      Release.findOneAndUpdate({ id: req.body.relId }, {
+        name: req.body.name,
+        type: req.body.type,
+        previewBeginDate: req.body.previewBeginDate,
+        prodBeginDate: req.body.prodBeginData
+      }, { new: true }, (err, release) => {
+        if (err) {
+          if (err.name === "ValidationError") {
+            res.status(400)
+          } else {
+            res.status(500);
+          }
+          res.send(err);
+        } else {
+          res.json(release);
+        }
+      });
     })
     .get((req, res) => {
       Release.find().then((releases) => {

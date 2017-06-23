@@ -60,8 +60,8 @@ export default class ReleaseEditor extends React.Component {
         loadingData: false,
         name: release.name,
         type: release.type,
-        previewBeginDate: release.previewBeginDate,
-        prodBeginDate: release.prodBeginDate
+        previewBeginDate: moment(release.previewBeginDate),
+        prodBeginDate: moment(release.prodBeginDate)
       })
     }).catch((err) => {
       this.setState({
@@ -193,7 +193,6 @@ export default class ReleaseEditor extends React.Component {
   }
 
   editorView() {
-    const editorState = this.state.editorState;
     return (
       <div className="editor-container">
         <div className="editor-input">
