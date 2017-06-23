@@ -104,61 +104,21 @@ h5 {
 
 .release,
 .submission {
-    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    box-shadow: 0px 3px 5px rgba(0,0,0, 0.2);
     padding: 1rem 2rem;
-    margin: 2rem 0;
-    border-radius: 3px;
+    margin: 1rem 0;
+    border-radius: 5px;
 }
 
-.release {
-    display: flex;
-    flex-wrap: wrap;
-}
 
-.release-item {
-    flex: 1;
-    padding: 0 1.5rem;
-}
-
-.release-item.release-name {
-    flex: 2;
-    padding-left: 0;
-}
-
-.release-item-title {
-    font-weight: normal;
-    font-style: oblique;
-}
-
-.release-link {
-    text-decoration: none;
-    font-weight: bold;
-    color: #007dc1;
-    cursor: pointer;
-    text-transform: uppercase;
-    transition: all 150ms ease-out;
-    padding: 1.5rem 1.5rem 0.5rem;
-}
-
-.release-link:hover {
-    color: #0095e5;
-}
-
-.release-button-row {
-    justify-content: flex-end;
-}
-
-.row {
-    width: 100%;
-    display: flex;
-}
-
-.info-row {
-    justify-content: flex-end;
+h3 {
+      font-size: 13px;
+      color: #5E5E5E;
 }
 
 .releases-container {
     margin-top: 1rem;
+
 }
 
 .section-header {
@@ -171,24 +131,17 @@ h5 {
     color: #333;
     display: inline-block;
     margin-right: 2rem;
-    flex: 3;
-}
-
-.section-action-item {
-    flex: 1;
 }
 
 .button-link {
     text-decoration: none;
-    text-align: center;
-    padding: 1rem 1.5rem;
+    padding: 0.5rem 1rem;
     font-weight: bold;
     color: #444;
     border-radius: 3px;
     box-shadow: 0px 2px 4px rgba(0,0,0,0.2);
     transition: all 0.2s ease-out;
     display: inline-block;
-    cursor: pointer;
 }
 
 .button-link:hover {
