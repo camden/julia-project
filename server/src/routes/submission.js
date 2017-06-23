@@ -1,4 +1,5 @@
 import { model as Submission } from '../models/submission';
+import { processRes } from '../utils';
 
 const submissionRoutes = (router) => {
   router.route('/submissions')
@@ -47,22 +48,22 @@ const submissionRoutes = (router) => {
       });
     })
     .get((req, res) => {
-      Submission.find().populate('release').then((err, submissions) => {
+      Submission.find().populate('release').then((submissions) => {
+        processRes(res, submissions);
+      }).catch((err) => {
         if (err) {
           res.send(err);
-        } else {
-          res.json(submissions);
         }
-      })
+      });
     });
 
   router.route('/submissions/:subId')
     .get((req, res) => {
-      Submission.where({ id: req.params.subId }).findOne().populate('release').then((err, sub) => {
+      Submission.where({ id: req.params.subId }).findOne().populate('release').then((sub) => {
+        processRes(res, sub);
+      }).catch((err) => {
         if (err) {
           res.send(err);
-        } else {
-          res.json(sub);
         }
       });
     });
