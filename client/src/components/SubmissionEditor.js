@@ -59,8 +59,9 @@ export default class SubmissionEditor extends React.Component {
   }
 
   componentDidMount() {
-    this.loadDataIfURLParam();
-    this.loadReleaseOptions();
+    this.loadDataIfURLParam().then((releaseData) => {
+      this.loadReleaseOptions(releaseData);
+    });
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -74,15 +75,25 @@ export default class SubmissionEditor extends React.Component {
     }
   }
 
-  loadReleaseOptions() {
+  loadReleaseOptions(submission) {
     this.setState({
       loadingData: true,
     });
 
     return utils.fetchData('/releases').then((releases) => {
+      let selectedRelease = {};
+      if (releases.length > 0) {
+        selectedRelease = releases[0];
+        if (submission) {
+          selectedRelease = releases.find((rel) => {
+            return rel.id === submission.release.id;
+          });
+        }
+      }
+
       this.setState({
         fetchedReleaseOptions: releases,
-        release: releases.length > 0 ? releases[0] : [],
+        release: selectedRelease,
         loadingData: false,
       });
     });
@@ -98,16 +109,18 @@ export default class SubmissionEditor extends React.Component {
         submissionId: subId
       });
 
-      this.loadDataBySubmissionId(subId);
+      return this.loadDataBySubmissionId(subId);
     } else {
       this.setState({
         loadingData: false,
       });
+
+      return Promise.resolve();
     }
   }
 
   loadDataBySubmissionId(subId) {
-    fetch(`${config.baseUrl}/submissions/${subId}`, {
+    return fetch(`${config.baseUrl}/submissions/${subId}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
@@ -120,7 +133,6 @@ export default class SubmissionEditor extends React.Component {
       }
       return res.json();
     }).then((submission) => {
-      console.log("got", submission);
       this.setState({
         loadingData: false,
         titleText: submission.contentTitle,
@@ -132,7 +144,8 @@ export default class SubmissionEditor extends React.Component {
           )
         ),
         category: submission.category
-      })
+      });
+      return submission;
     }).catch((err) => {
       this.setState({
         loadingData: false,
@@ -201,7 +214,6 @@ export default class SubmissionEditor extends React.Component {
     this.makeOutput();
 
     this.callSubmissionApi('POST').then((submission) => {
-      console.log("New submission: ", submission);
       this.setState({
         submitting: false,
         submitted: true
@@ -245,7 +257,6 @@ export default class SubmissionEditor extends React.Component {
       submitted: false
     });
     this.callSubmissionApi('PUT').then((submission) => {
-      console.log("updated:", submission);
       this.setState({
         submitting: false,
         submitted: true
