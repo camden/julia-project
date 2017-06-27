@@ -55,8 +55,14 @@ const fetchData = function(apiUrl) {
     });
 }
 
+const formatDate = function(date) {
+  return moment(date).format('MMM Do, YYYY'); 
+}
+
+
 module.exports = {
   getMockSubmissions,
   fetchData,
-  callApi
+  callApi,
+  formatDate
 };

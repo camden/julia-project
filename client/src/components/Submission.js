@@ -44,13 +44,14 @@ export default class Submission extends React.Component {
   render() {
     const sub = this.props.subData;
 
+    // TODO the delete button can easily be refactored into a separate component
     return (
       <div className='submission' key={sub.id}>
         <div className='submission-author'>Author: {sub.authorName}</div>
         <div className='submission-category'>Category: {sub.category}</div>
         <div className='submission-title'>Title: {sub.contentTitle}</div>
         <div className='submission-created-date'>{sub.createdDate}</div>
-        <div className='submission-release'>Release: {sub.release.name}</div>
+        <div className='submission-release'>Release: {sub.release ? sub.release.name : '[RELEASE DELETED]'}</div>
         <Link to={`/editor/submission/${sub.id}`} className='release-link'>Edit this submission</Link>
         <div 
           onClick={this.deleteButtonPress} 

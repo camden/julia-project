@@ -63,6 +63,15 @@ const releasesRoutes = (router) => {
       Release.where({ id: req.params.relId }).findOne((err, rel) => {
         processRes(res, err, rel);
       });
+    })
+    .delete((req, res) => {
+      Release.where({ id: req.params.relId }).findOne().remove().then((rel) => {
+        processRes(res, rel);
+      }).catch((err) => {
+        if (err) {
+          res.send(err);
+        }
+      });
     });
 
   router.route('/releases/:relId/submissions')
