@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import Submission from './Submission';
 import { getMockSubmissions, fetchData } from '../utils';
 import config from '../config.json';
 
@@ -50,15 +51,7 @@ export default class SubmissionsViewer extends React.Component {
   getSubmissions() {
     const subs = this.state.submissions.map((sub) => {
       return (
-        <div className='submission' key={sub.id}>
-          <div className='submission-author'>Author: {sub.authorName}</div>
-          <div className='submission-category'>Category: {sub.category}</div>
-          <div className='submission-title'>Title: {sub.contentTitle}</div>
-          <div className='submission-created-date'>{sub.createdDate}</div>
-          <div className='submission-release'>Release: {sub.release.name}</div>
-          <Link to={`/editor/submission/${sub.id}`} className='submission-edit-link'>Edit this submission</Link>
-          <pre className='submission-content'>{sub.content}</pre>
-        </div>
+        <Submission subData={sub} />
       );
     });
 

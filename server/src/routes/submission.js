@@ -65,6 +65,15 @@ const submissionRoutes = (router) => {
         if (err) {
           res.send(err);
         }
+      })
+    })
+    .delete((req, res) => {
+      Submission.where({ id: req.params.subId }).findOne().remove().then((sub) => {
+        processRes(res, sub);
+      }).catch((err) => {
+        if (err) {
+          res.send(err);
+        }
       });
     });
 }

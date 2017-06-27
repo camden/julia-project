@@ -22,6 +22,25 @@ const getMockSubmissions = function() {
   ]
 }
 
+const callApi = function(url, method, body) {
+    return fetch(config.baseUrl + url, {
+      method: method,
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: body
+    }).then((res) => {
+      if (!res.ok) {
+        return res.json().then((err) => {
+          throw err;
+        });
+      }
+      return res.json();
+    }).catch((err) => {
+      throw err;
+    });
+}
+
 const fetchData = function(apiUrl) {
     const url = config.baseUrl + apiUrl;
     return fetch(url, {
@@ -38,5 +57,6 @@ const fetchData = function(apiUrl) {
 
 module.exports = {
   getMockSubmissions,
-  fetchData
+  fetchData,
+  callApi
 };

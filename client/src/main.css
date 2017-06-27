@@ -130,6 +130,10 @@ h5 {
     font-style: oblique;
 }
 
+.button-link.warning {
+    color: #ef5350;
+}
+
 .release-link {
     text-decoration: none;
     font-weight: bold;
