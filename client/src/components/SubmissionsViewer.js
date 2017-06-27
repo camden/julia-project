@@ -120,7 +120,6 @@ export default class SubmissionsViewer extends React.Component {
       <div className="viewer">
         <div className='section-header'>
           <h1 className='section-title'>{this.getSectionTitle()}</h1>
-          {this.getNewSubmissionButton()}
         </div>
         {this.getAllContent()}
         <hr />
