@@ -59,9 +59,13 @@ export default class SubmissionEditor extends React.Component {
   }
 
   componentDidMount() {
-    this.loadDataIfURLParam().then((releaseData) => {
-      this.loadReleaseOptions(releaseData);
-    });
+    this.loadDataIfURLParam()
+      .then((releaseData) => {
+        this.loadReleaseOptions(releaseData);
+      })
+      .then(() => {
+        this.makeOutput();
+      });
   }
 
   componentDidUpdate(prevProps, prevState) {
