@@ -60,11 +60,14 @@ export default class SubmissionEditor extends React.Component {
 
   componentDidMount() {
     this.loadDataIfURLParam()
-      .then((releaseData) => {
-        this.loadReleaseOptions(releaseData);
+      .then((submissionData) => {
+        this.loadReleaseOptions(submissionData);
+        return submissionData;
       })
-      .then(() => {
-        this.makeOutput();
+      .then((submissionData) => {
+        const contentState = JSON.parse(submissionData.rawContentWithoutTitle);
+        this.onContentStateChange(contentState);
+        this.makeOutput(contentState);
       });
   }
 
@@ -201,8 +204,8 @@ export default class SubmissionEditor extends React.Component {
     });
   }
 
-  makeOutput() {
-    const bodyText = draftToHtml(this.state.contentState);
+  makeOutput(contentState) {
+    const bodyText = draftToHtml(contentState || this.state.contentState);
     const nextOutput = getDropdownMarkup(this.state.titleText, bodyText);
     this.setState({
       output: nextOutput
