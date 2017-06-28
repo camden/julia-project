@@ -12,7 +12,8 @@ export default class SubmissionsViewer extends React.Component {
 
     this.state = {
       submissions: [],
-      release: null
+      release: null,
+      loadingData: true
     }
   }
 
@@ -23,7 +24,8 @@ export default class SubmissionsViewer extends React.Component {
   fetchSubmissions() {
     if (this.props.mock) {
       this.setState({
-        submissions: getMockSubmissions()
+        submissions: getMockSubmissions(),
+        loadingData: false
       });
       return;
     }
@@ -35,17 +37,26 @@ export default class SubmissionsViewer extends React.Component {
       url = `/releases/${releaseId}/submissions`;
       fetchData(`/releases/${releaseId}`).then((release) => {
         this.setState({
-          release: release
+          release: release,
+          loadingData: false
         });
       });
     }
 
     fetchData(url).then((submissions) => {
-      console.log(submissions);
       this.setState({
-        submissions: submissions
+        submissions: submissions,
+        loadingData: false
       });
     });
+  }
+
+  loadingView() {
+    if (this.state.loadingData) {
+      return (
+        <div className="loading-container">Loading!</div>
+      );
+    }
   }
 
   getSubmissions() {
@@ -100,6 +111,10 @@ export default class SubmissionsViewer extends React.Component {
   }
 
   getSectionTitle() {
+    if (this.state.loadingData) {
+      return '';
+    }
+
     if (this.state.release) {
       return `Submissions for Release: '${this.state.release.name}'`;
     } else {
@@ -121,6 +136,7 @@ export default class SubmissionsViewer extends React.Component {
         <div className='section-header'>
           <h1 className='section-title'>{this.getSectionTitle()}</h1>
         </div>
+        {this.loadingView()}
         {this.getAllContent()}
         <hr />
         {this.getSubmissions()}
