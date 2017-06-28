@@ -21,6 +21,27 @@ export default class SubmissionsViewer extends React.Component {
     this.fetchSubmissions();
   }
 
+  componentDidUpdate(prevProps) {
+    let refetch = false;
+
+    // If there is a change in the path itself
+    if (
+      (prevProps.match && !this.props.match) ||
+      (!prevProps.match && this.props.match)
+    ) {
+      refetch = true;
+    }
+
+    // If the release id specifically changed
+    if (prevProps.match.params.releaseId !== this.props.match.params.releaseId) {
+      refetch = true;
+    }
+
+    if (refetch) {
+      this.fetchSubmissions();
+    }
+  }
+
   fetchSubmissions() {
     if (this.props.mock) {
       this.setState({
@@ -51,6 +72,7 @@ export default class SubmissionsViewer extends React.Component {
         });
       } else {
         this.setState({
+          release: undefined,
           loadingData: false
         });
       }
