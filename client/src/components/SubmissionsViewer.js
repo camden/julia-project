@@ -50,9 +50,9 @@ export default class SubmissionsViewer extends React.Component {
           });
         });
       } else {
-          this.setState({
-            loadingData: false
-          });
+        this.setState({
+          loadingData: false
+        });
       }
     });
   }
