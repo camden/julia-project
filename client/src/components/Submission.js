@@ -57,15 +57,17 @@ export default class Submission extends React.Component {
           onClick={this.deleteButtonPress}
           onMouseLeave={this.deleteButtonLeave}
           className='release-link warning'
-          <span className='delete-submission'>span </span>
+
 
         >
+
           {
             this.state.deleting ?
               confirmationText
               :
               deleteText
           }
+
         </div>
         <pre className='submission-content'>{sub.content}</pre>
       </div>
