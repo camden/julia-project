@@ -23,20 +23,29 @@ h5 {
 /* End Okta style */
 
 
-.toolbar-content,
-.content {
-    margin: 0 10rem;
-}
-
 .app {
     position: relative;
 }
 
 .content {
-    padding-top: 6rem;
+    padding-top: 8rem;
+    margin: 0 10rem;
+}
+
+.toolbar-content {
+    flex: 1;
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    height: 69px;
+    padding: 14px 20px;
+    width: auto;
 }
 
 .toolbar {
+  display: flex;
     background-color: #F9F9F9;
     position: fixed; /* Set the navbar to fixed position */
     top: 0; /* Position the navbar at the top of the page */
@@ -120,7 +129,7 @@ h5 {
 }
 
 .release-item.release-name {
-    flex: 2;
+    flex: 1;
     padding-left: 0;
 }
 
@@ -129,8 +138,16 @@ h5 {
     font-style: oblique;
 }
 
-.button-link.warning {
-    color: #ef5350;
+.release-type {
+    font-style: oblique;
+}
+
+.release-link.warning {
+    color: #FF5722;
+}
+
+.release-link.warning:hover {
+    color: #FF9800;
 }
 
 .release-link {

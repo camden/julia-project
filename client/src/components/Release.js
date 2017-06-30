@@ -47,7 +47,10 @@ export default class Release extends React.Component {
     return (
       <div className='release'>
         <div className='row'>
-          <h3 className='release-item release-name'>{rel.name} &middot; [{rel.type}]</h3>
+          <h3 className='release-item release-name'>
+            {rel.name}
+            <span className='release-type'>{rel.type}</span>
+          </h3>
           <h3 className='release-item'>
             <div className='row info-row'>
               <span className='release-item-title'>Preview Begin Date</span>
@@ -68,10 +71,10 @@ export default class Release extends React.Component {
         <div className='row release-button-row'>
           <Link to={`/viewer/${rel.id}`} className='release-link'>View Submissions</Link>
           <Link to={`/editor/release/${rel.id}`} className='release-link'>Edit</Link>
-          <div 
-            onClick={this.deleteButtonPress} 
+          <div
+            onClick={this.deleteButtonPress}
             onMouseLeave={this.deleteButtonLeave}
-            className='button-link warning'
+            className='release-link warning'
           >
             {
               this.state.deleting ?
