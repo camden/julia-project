@@ -28,7 +28,7 @@ export default class App extends React.Component {
             <div className='content'>
               <Route exact path="/" component={Homepage}/>
               <Route path="/viewer/:releaseId?" component={SubmissionsViewer}/>
-              <Route path="/viewer-mock" render={() => <SubmissionsViewer mock={true}></SubmissionsViewer>} />
+              <Route path="/viewer-mock" render={() => <SubmissionsViewer mock={true} />} />
               <Route path="/editor/release/:relId?" component={ReleaseEditor} />
               <Route path="/editor/submission/:subId?" component={SubmissionEditor}/>
             </div>

@@ -1,9 +1,16 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink as Link } from 'react-router-dom';
 
 const ToolbarItem = ({ title, linksTo }) => {
   return (
-    <Link className='toolbar-item' to={linksTo}>{title}</Link>
+    <Link 
+      className='toolbar-item' 
+      to={linksTo} 
+      activeClassName='toolbar-item-selected'
+      exact
+    >
+      {title}
+    </Link>
   );
 } 
 
