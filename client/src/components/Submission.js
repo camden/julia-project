@@ -53,10 +53,12 @@ export default class Submission extends React.Component {
         <div className='submission-created-date'>{sub.createdDate}</div>
         <div className='submission-release'>Release: {sub.release ? sub.release.name : '[RELEASE DELETED]'}</div>
         <Link to={`/editor/submission/${sub.id}`} className='release-link'>Edit this submission</Link>
-        <div 
-          onClick={this.deleteButtonPress} 
+        <div
+          onClick={this.deleteButtonPress}
           onMouseLeave={this.deleteButtonLeave}
-          className='button-link warning'
+          className='release-link warning'
+          <span className='delete-submission'>span </span>
+
         >
           {
             this.state.deleting ?

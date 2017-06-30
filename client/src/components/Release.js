@@ -76,6 +76,8 @@ export default class Release extends React.Component {
             onMouseLeave={this.deleteButtonLeave}
             className='release-link warning'
           >
+
+
             {
               this.state.deleting ?
                 confirmationText

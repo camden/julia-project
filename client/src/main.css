@@ -169,9 +169,14 @@ h5 {
     color: #007dc1;
     cursor: pointer;
     text-transform: uppercase;
+    display: inline-block;
     transition: all 150ms ease-out;
     padding: 1.5rem 1.5rem 0.5rem;
 }
+
+.delete-submission {
+    padding: 1.5rem 3.5rem 0.5rem;
+   }
 
 .release-link:hover {
     color: #0095e5;
