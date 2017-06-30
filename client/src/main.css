@@ -25,6 +25,7 @@ h5 {
 
 .app {
     position: relative;
+    color: #333;
 }
 
 .content {
@@ -99,6 +100,7 @@ h5 {
 .submission-content {
     padding: 5px;
     background: #eee;
+    user-select: all;
 }
 
 .editor-input {
@@ -140,6 +142,13 @@ h5 {
 
 .release-type {
     font-style: oblique;
+    font-weight: lighter;
+    text-transform: capitalize;
+    color: #999;
+}
+
+.release-type::before {
+    content: '  ';
 }
 
 .release-link.warning {

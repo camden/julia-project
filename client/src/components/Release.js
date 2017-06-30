@@ -49,7 +49,7 @@ export default class Release extends React.Component {
         <div className='row'>
           <h3 className='release-item release-name'>
             {rel.name}
-            <span className='release-type'>{rel.type}</span>
+            <span className='release-type'>({rel.type})</span>
           </h3>
           <h3 className='release-item'>
             <div className='row info-row'>
