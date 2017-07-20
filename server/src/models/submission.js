@@ -31,7 +31,13 @@ const SubmissionSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
     required: true
+  },
+  order: {
+    type: Number,
+    default: 0,
+    required: true
   }
+
 });
 
 SubmissionSchema.plugin(autoIncrement, {inc_field: 'id', id: 'submission_id'});

@@ -109,12 +109,17 @@ export default class SubmissionsViewer extends React.Component {
     }
   }
 
+onSortEndSubmissions({oldIndex, newIndex}) {
+  console.log("Save new order of submissions?", oldIndex, newIndex)
+}
+
   getSubmissions() {
     return (
       <div className='submissions-container'>
         <SortableSubmissionList
           submissions={this.state.submissions}
           useDragHandle={true}
+          onSortEnd={this.onSortEndSubmissions}
         />
       </div>
     )
