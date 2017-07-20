@@ -1,9 +1,31 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { SortableContainer, SortableElement, SortableHandle } from 'react-sortable-hoc';
 
 import Submission from './Submission';
 import { getMockSubmissions, fetchData } from '../utils';
 import config from '../config.json';
+
+const DragHandle = SortableHandle(() =>
+  <span>DRAG ME</span>
+);
+
+const SortableSubmission = SortableElement(({subData}) =>
+  <div>
+    <DragHandle />
+    <Submission subData={subData} />
+  </div>
+);
+
+const SortableSubmissionList = SortableContainer(({submissions}) => {
+  return (
+    <div>
+      {submissions.map((subData, index) => (
+        <SortableSubmission key={`submission-${index}`} index={index} subData={subData} />
+      ))}
+    </div>
+  );
+});
 
 export default class SubmissionsViewer extends React.Component {
 
@@ -88,15 +110,12 @@ export default class SubmissionsViewer extends React.Component {
   }
 
   getSubmissions() {
-    const subs = this.state.submissions.map((sub) => {
-      return (
-        <Submission subData={sub} />
-      );
-    });
-
     return (
       <div className='submissions-container'>
-        {subs}
+        <SortableSubmissionList
+          submissions={this.state.submissions}
+          useDragHandle={true}
+        />
       </div>
     )
   }
@@ -151,7 +170,7 @@ export default class SubmissionsViewer extends React.Component {
   }
 
   getNewSubmissionButton() {
-    return (	
+    return (
       <Link to='/editor/submission' className='button-link'>
         Create New Submission
       </Link>
