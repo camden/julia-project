@@ -6,6 +6,7 @@ const getMockSubmissions = function() {
   return [
     {
       id: 1,
+      order: 1,
       authorName: "Camden",
       contentTitle: "best new feature",
       category: "Announcements",
@@ -14,6 +15,7 @@ const getMockSubmissions = function() {
     },
     {
       id: 2,
+      order: 2, 
       authorName: "Julia",
       contentTitle: "best new feature",
       category: "General Info",
@@ -56,7 +58,7 @@ const fetchData = function(apiUrl) {
 }
 
 const formatDate = function(date) {
-  return moment(date).format('MMM Do, YYYY'); 
+  return moment(date).format('MMM Do, YYYY');
 }
 
 

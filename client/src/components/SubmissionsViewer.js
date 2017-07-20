@@ -21,7 +21,7 @@ const SortableSubmissionList = SortableContainer(({submissions}) => {
   return (
     <div>
       {submissions.map((subData, index) => (
-        <SortableSubmission key={`submission-${index}`} index={index} subData={subData} />
+        <SortableSubmission key={`submission-${index}`} index={subData.order} subData={subData} />
       ))}
     </div>
   );
@@ -111,7 +111,10 @@ export default class SubmissionsViewer extends React.Component {
 
 onSortEndSubmissions({oldIndex, newIndex}) {
   console.log("Save new order of submissions?", oldIndex, newIndex)
+  const movingSub=this.state.submissions[oldIndex];
+  console.log(movingSub) 
 }
+
 
   getSubmissions() {
     return (
