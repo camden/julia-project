@@ -123,16 +123,12 @@ export default class SubmissionsViewer extends React.Component {
     }
   }
 
-  onSortEndSubmissions({oldIndex: oldOrder, newIndex: newOrder}) {
-
-    // The position of the sub with order oldOrder in array
-    const oldIndexPos = this.state.submissions.findIndex((sub) => sub.order === oldOrder);
-    const newIndexPos = this.state.submissions.findIndex((sub) => sub.order === newOrder);
+  onSortEndSubmissions({oldIndex, newIndex}) {
 
     const updatedSubmissions = arrayMove(this.state.submissions.map((sub) => {
       // Copy the object
       return Object.assign({}, sub);
-    }), oldIndexPos, newIndexPos);
+    }), oldIndex, newIndex);
 
     for (let i = 0; i < this.state.submissions.length; i++) {
       updatedSubmissions[i].order = this.state.submissions[i].order;
