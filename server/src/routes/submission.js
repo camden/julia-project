@@ -18,6 +18,10 @@ const submissionRoutes = (router) => {
         } else {
           sub.order = 0;
         }
+
+        if (isNaN(sub.order)) {
+          sub.order = 0;
+        }
       }).then(() => {
         sub.save((err, submission) => {
           if (err) {
