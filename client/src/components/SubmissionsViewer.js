@@ -127,7 +127,6 @@ export default class SubmissionsViewer extends React.Component {
     }), oldIndexPos, newIndexPos);
 
     for (let i = 0; i < this.state.submissions.length; i++) {
-      debugger;
       updatedSubmissions[i].order = this.state.submissions[i].order;
     }
 
