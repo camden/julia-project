@@ -66,7 +66,7 @@ export default class Submission extends React.Component {
               <div className='submission-author'>Author: {sub.authorName}</div>
               <div className='submission-category'>Category: {sub.category}</div>
               <div className='submission-title'>Title: {sub.contentTitle}</div>
-              <div className='submission-created-date'>{moment(sub.createdDate).format('MMM Do, YYYY, h a')}</div>
+              <div className='submission-created-date'>{moment(sub.createdDate).format('MMM. Do, YYYY [at] h:mm A z')}</div>
               <div className='submission-release'>Release: {sub.release ? sub.release.name : '[RELEASE DELETED]'}</div>
             </div>
             <div className='submission-buttons'>
