@@ -58,7 +58,6 @@ export default class Submission extends React.Component {
     return (
       <div className='submission' key={sub.id}>
         <div className='submission-drag-area'>
-          <div className='submission-order'>{sub.order}</div>
           <DragHandle />
         </div>
         <div className='submission-main'>
