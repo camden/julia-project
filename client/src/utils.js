@@ -39,7 +39,7 @@ const callApi = function(url, method, body) {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: body
+      body: JSON.stringify(body)
     }).then((res) => {
       if (!res.ok) {
         return res.json().then((err) => {

@@ -8,7 +8,7 @@ import {
 } from 'react-sortable-hoc';
 
 import Submission from './Submission';
-import { getMockSubmissions, fetchData } from '../utils';
+import { getMockSubmissions, fetchData, callApi } from '../utils';
 
 const DragHandle = SortableHandle(() =>
   <span>DRAG ME</span>
@@ -25,7 +25,7 @@ const SortableSubmissionList = SortableContainer(({submissions}) => {
   return (
     <div>
       {submissions.map((subData, index) => (
-        <SortableSubmission key={`submission-${index}`} index={subData.order} subData={subData} />
+        <SortableSubmission key={`submission-${subData.id}`} index={subData.order} subData={subData} />
       ))}
     </div>
   );
@@ -107,6 +107,14 @@ export default class SubmissionsViewer extends React.Component {
     });
   }
 
+  syncAllSubmissions() {
+    this.state.submissions.forEach((sub) => {
+      callApi(`/submissions`, "PUT", Object.assign({}, sub, {
+        subId: sub.id
+      }));
+    });
+  }
+
   loadingView() {
     if (this.state.loadingData) {
       return (
@@ -132,7 +140,7 @@ export default class SubmissionsViewer extends React.Component {
 
     this.setState({
       submissions: updatedSubmissions
-    });
+    }, this.syncAllSubmissions);
   }
 
 
