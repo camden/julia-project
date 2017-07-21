@@ -141,6 +141,12 @@ h5 {
     flex: 1;
 }
 
+.submission-order {
+    font-style: oblique;
+    font-weight: lighter;
+    user-select: none;
+}
+
 .editor-input {
     padding: 0.5rem 1rem;
 }
