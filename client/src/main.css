@@ -127,6 +127,18 @@ h5 {
     flex: 1;
 }
 
+.submission-header {
+    display: flex;
+}
+
+.submission-info {
+    flex: 1;
+}
+
+.submission-buttons {
+    flex: 1;
+}
+
 .editor-input {
     padding: 0.5rem 1rem;
 }

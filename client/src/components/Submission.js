@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 import { Link } from 'react-router-dom';
 import {
   SortableHandle
@@ -60,24 +61,30 @@ export default class Submission extends React.Component {
           <DragHandle />
         </div>
         <div className='submission-main'>
-          <div className='submission-author'>Author: {sub.authorName}</div>
-          <div className='submission-category'>Category: {sub.category}</div>
-          <div className='submission-title'>Title: {sub.contentTitle}</div>
-          <div className='submission-created-date'>{sub.createdDate}</div>
-          <div className='submission-release'>Release: {sub.release ? sub.release.name : '[RELEASE DELETED]'}</div>
-          <Link to={`/editor/submission/${sub.id}`} className='release-link'>Edit this submission</Link>
-          <div
-            onClick={this.deleteButtonPress}
-            onMouseLeave={this.deleteButtonLeave}
-            className='release-link warning'
-          >
-            {
-              this.state.deleting ?
-                confirmationText
-                :
-                deleteText
-            }
+          <div className='submission-header'>
+            <div className='submission-info'>
+              <div className='submission-author'>Author: {sub.authorName}</div>
+              <div className='submission-category'>Category: {sub.category}</div>
+              <div className='submission-title'>Title: {sub.contentTitle}</div>
+              <div className='submission-created-date'>{moment(sub.createdDate).format('MMM Do, YYYY, h a')}</div>
+              <div className='submission-release'>Release: {sub.release ? sub.release.name : '[RELEASE DELETED]'}</div>
+            </div>
+            <div className='submission-buttons'>
+              <Link to={`/editor/submission/${sub.id}`} className='release-link'>Edit this submission</Link>
+              <div
+                onClick={this.deleteButtonPress}
+                onMouseLeave={this.deleteButtonLeave}
+                className='release-link warning'
+              >
+                {
+                  this.state.deleting ?
+                    confirmationText
+                    :
+                    deleteText
+                }
 
+              </div>
+            </div>
           </div>
           <pre className='submission-content'>{sub.content}</pre>
         </div>
