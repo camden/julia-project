@@ -1,9 +1,35 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import {
+  SortableContainer,
+  SortableElement,
+  SortableHandle,
+  arrayMove
+} from 'react-sortable-hoc';
 
 import Submission from './Submission';
-import { getMockSubmissions, fetchData } from '../utils';
-import config from '../config.json';
+import { getMockSubmissions, fetchData, callApi } from '../utils';
+
+const SortableSubmission = SortableElement(({subData}) =>
+  <div>
+    <Submission 
+      subData={subData} 
+    />
+  </div>
+);
+
+const SortableSubmissionList = SortableContainer(({submissions}) => {
+  return (
+    <div>
+      {submissions.sort((a, b) => a.order - b.order).map((subData, index) => (
+        <SortableSubmission 
+          key={`submission-${subData.id}`} 
+          index={index} 
+          subData={subData} />
+      ))}
+    </div>
+  );
+});
 
 export default class SubmissionsViewer extends React.Component {
 
@@ -30,6 +56,8 @@ export default class SubmissionsViewer extends React.Component {
       (!prevProps.match && this.props.match)
     ) {
       refetch = true;
+    } else {
+      return;
     }
 
     // If the release id specifically changed
@@ -79,6 +107,14 @@ export default class SubmissionsViewer extends React.Component {
     });
   }
 
+  syncAllSubmissions() {
+    this.state.submissions.forEach((sub) => {
+      callApi(`/submissions`, "PUT", Object.assign({}, sub, {
+        subId: sub.id
+      }));
+    });
+  }
+
   loadingView() {
     if (this.state.loadingData) {
       return (
@@ -87,16 +123,36 @@ export default class SubmissionsViewer extends React.Component {
     }
   }
 
-  getSubmissions() {
-    const subs = this.state.submissions.map((sub) => {
-      return (
-        <Submission subData={sub} />
-      );
-    });
+  onSortEndSubmissions({oldIndex: oldOrder, newIndex: newOrder}) {
 
+    // The position of the sub with order oldOrder in array
+    const oldIndexPos = this.state.submissions.findIndex((sub) => sub.order === oldOrder);
+    const newIndexPos = this.state.submissions.findIndex((sub) => sub.order === newOrder);
+
+    const updatedSubmissions = arrayMove(this.state.submissions.map((sub) => {
+      // Copy the object
+      return Object.assign({}, sub);
+    }), oldIndexPos, newIndexPos);
+
+    for (let i = 0; i < this.state.submissions.length; i++) {
+      updatedSubmissions[i].order = this.state.submissions[i].order;
+    }
+
+    this.setState({
+      submissions: updatedSubmissions
+    }, this.syncAllSubmissions);
+  }
+
+
+  getSubmissions() {
     return (
       <div className='submissions-container'>
-        {subs}
+        <SortableSubmissionList
+          submissions={this.state.submissions}
+          useDragHandle={true}
+          onSortEnd={this.onSortEndSubmissions.bind(this)}
+          lockAxis={"y"}
+        />
       </div>
     )
   }
@@ -151,7 +207,7 @@ export default class SubmissionsViewer extends React.Component {
   }
 
   getNewSubmissionButton() {
-    return (	
+    return (
       <Link to='/editor/submission' className='button-link'>
         Create New Submission
       </Link>

@@ -12,22 +12,31 @@ const submissionRoutes = (router) => {
       sub.contentTitle = req.body.contentTitle;
       sub.release = req.body.release;
 
-      sub.save((err, submission) => {
-        if (err) {
-          if (err.name === "ValidationError") {
-            res.status(400)
-          } else {
-            res.status(500);
-          }
-          res.send(err);
+      Submission.find().sort('-order').limit(1).then((subWithMaxOrder) => {
+        if (subWithMaxOrder.length > 0) {
+          sub.order = subWithMaxOrder[0].order + 1;
         } else {
-          res.json(submission);
+          sub.order = 0;
         }
+      }).then(() => {
+        sub.save((err, submission) => {
+          if (err) {
+            if (err.name === "ValidationError") {
+              res.status(400)
+            } else {
+              res.status(500);
+            }
+            res.send(err);
+          } else {
+            res.json(submission);
+          }
+        })
       })
     })
     .put((req, res) => {
       const subId = JSON.parse(req.body.subId);
       Submission.findOneAndUpdate({ id: subId }, {
+        order: req.body.order,
         category: req.body.category,
         authorName: req.body.authorName,
         content: req.body.content,
