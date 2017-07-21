@@ -11,7 +11,7 @@ const deleteText = 'Delete this Submission';
 const confirmationText = 'Click here again to delete!';
 
 const DragHandle = SortableHandle(() =>
-  <div className='submission-drag-handle'></div>
+  <div className='submission-drag-handle'>⌖</div>
 );
 
 export default class Submission extends React.Component {
