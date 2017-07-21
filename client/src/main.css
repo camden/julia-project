@@ -107,6 +107,26 @@ h5 {
     
 }
 
+.submission {
+    display: flex;
+}
+
+.submission-drag-area {
+    margin-right: 2rem;
+    background-color: #f9f9f9;
+    width: 2rem;
+}
+
+.submission-drag-handle {
+    width: 100%;
+    height: 100%;
+    cursor: move;
+}
+
+.submission-main {
+    flex: 1;
+}
+
 .editor-input {
     padding: 0.5rem 1rem;
 }

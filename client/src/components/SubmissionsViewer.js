@@ -10,14 +10,11 @@ import {
 import Submission from './Submission';
 import { getMockSubmissions, fetchData, callApi } from '../utils';
 
-const DragHandle = SortableHandle(() =>
-  <span>DRAG ME</span>
-);
-
 const SortableSubmission = SortableElement(({subData}) =>
   <div>
-    <DragHandle />
-    <Submission subData={subData} />
+    <Submission 
+      subData={subData} 
+    />
   </div>
 );
 
