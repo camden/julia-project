@@ -1,10 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { SortableContainer, SortableElement, SortableHandle } from 'react-sortable-hoc';
+import {
+  SortableContainer,
+  SortableElement,
+  SortableHandle,
+  arrayMove
+} from 'react-sortable-hoc';
 
 import Submission from './Submission';
 import { getMockSubmissions, fetchData } from '../utils';
-import config from '../config.json';
 
 const DragHandle = SortableHandle(() =>
   <span>DRAG ME</span>
@@ -52,6 +56,8 @@ export default class SubmissionsViewer extends React.Component {
       (!prevProps.match && this.props.match)
     ) {
       refetch = true;
+    } else {
+      return;
     }
 
     // If the release id specifically changed
@@ -109,11 +115,26 @@ export default class SubmissionsViewer extends React.Component {
     }
   }
 
-onSortEndSubmissions({oldIndex, newIndex}) {
-  console.log("Save new order of submissions?", oldIndex, newIndex)
-  const movingSub=this.state.submissions[oldIndex];
-  console.log(movingSub) 
-}
+  onSortEndSubmissions({oldIndex: oldOrder, newIndex: newOrder}) {
+
+    // The position of the sub with order oldOrder in array
+    const oldIndexPos = this.state.submissions.findIndex((sub) => sub.order === oldOrder);
+    const newIndexPos = this.state.submissions.findIndex((sub) => sub.order === newOrder);
+
+    const updatedSubmissions = arrayMove(this.state.submissions.map((sub) => {
+      // Copy the object
+      return Object.assign({}, sub);
+    }), oldIndexPos, newIndexPos);
+
+    for (let i = 0; i < this.state.submissions.length; i++) {
+      debugger;
+      updatedSubmissions[i].order = this.state.submissions[i].order;
+    }
+
+    this.setState({
+      submissions: updatedSubmissions
+    });
+  }
 
 
   getSubmissions() {
@@ -122,7 +143,8 @@ onSortEndSubmissions({oldIndex, newIndex}) {
         <SortableSubmissionList
           submissions={this.state.submissions}
           useDragHandle={true}
-          onSortEnd={this.onSortEndSubmissions}
+          onSortEnd={this.onSortEndSubmissions.bind(this)}
+          lockAxis={"y"}
         />
       </div>
     )

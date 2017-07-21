@@ -8,7 +8,7 @@ const getMockSubmissions = function() {
       id: 1,
       order: 1,
       authorName: "Camden",
-      contentTitle: "best new feature",
+      contentTitle: "other title",
       category: "Announcements",
       content: "content!",
       createdDate: moment().format("ddd, hA")
@@ -20,6 +20,15 @@ const getMockSubmissions = function() {
       contentTitle: "best new feature",
       category: "General Info",
       content: "<madcap>content goes here</madcap>"
+    },
+    {
+      id: 3,
+      order: 12,
+      authorName: "Camden",
+      contentTitle: "cam is great",
+      category: "Announcements",
+      content: "content!",
+      createdDate: moment().format("ddd, hA")
     }
   ]
 }

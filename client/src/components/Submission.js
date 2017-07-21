@@ -47,6 +47,7 @@ export default class Submission extends React.Component {
     // TODO the delete button can easily be refactored into a separate component
     return (
       <div className='submission' key={sub.id}>
+        <div>ORDER: {sub.order}</div>
         <div className='submission-author'>Author: {sub.authorName}</div>
         <div className='submission-category'>Category: {sub.category}</div>
         <div className='submission-title'>Title: {sub.contentTitle}</div>
