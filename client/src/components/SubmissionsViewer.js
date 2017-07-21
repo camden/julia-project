@@ -21,8 +21,11 @@ const SortableSubmission = SortableElement(({subData}) =>
 const SortableSubmissionList = SortableContainer(({submissions}) => {
   return (
     <div>
-      {submissions.map((subData, index) => (
-        <SortableSubmission key={`submission-${subData.id}`} index={subData.order} subData={subData} />
+      {submissions.sort((a, b) => a.order - b.order).map((subData, index) => (
+        <SortableSubmission 
+          key={`submission-${subData.id}`} 
+          index={index} 
+          subData={subData} />
       ))}
     </div>
   );
