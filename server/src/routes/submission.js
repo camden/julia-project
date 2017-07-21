@@ -40,7 +40,6 @@ const submissionRoutes = (router) => {
     .put((req, res) => {
       const subId = JSON.parse(req.body.subId);
       Submission.findOneAndUpdate({ id: subId }, {
-        order: req.body.order,
         category: req.body.category,
         authorName: req.body.authorName,
         content: req.body.content,
