@@ -8,7 +8,7 @@ import {
 import { callApi } from '../utils';
 
 const deleteText = 'Delete this Submission';
-const confirmationText = 'Click here again to delete!';
+const confirmationText = 'Click again to delete!';
 
 const DragHandle = SortableHandle(() =>
   <div className='submission-drag-handle'>⌖</div>

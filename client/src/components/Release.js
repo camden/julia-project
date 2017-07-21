@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { callApi, formatDate } from '../utils';
 
 const deleteText = 'Delete this Release';
-const confirmationText = 'Click here again to delete!';
+const confirmationText = 'Click again to delete!';
 export default class Release extends React.Component {
 
   static get propTypes() {
